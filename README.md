@@ -91,3 +91,20 @@ You can see the the intermediate files in the `outputs/two_outputs` directory. A
 
 Outputs: {'a_add_b': 3, 'a_mul_c': 3}
 ```
+
+
+#### Example `nn_circuit_small`
+
+```bash
+python main.py nn_circuit_small
+```
+
+You can see the the intermediate files in the `outputs/nn_circuit_small` directory. And you should see the following outputs in the console:
+
+```bash
+...
+========= Computation has finished =========
+
+
+Outputs: {'out[0]': 11846134085, 'out[1]': 12770577881, 'out[2]': 13695021677, 'out[3]': 14619465473}
+```
