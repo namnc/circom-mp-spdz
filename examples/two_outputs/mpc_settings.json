@@ -1,0 +1,12 @@
+[
+    {
+        "name": "alice",
+        "inputs": ["a"],
+        "outputs": ["a_add_b", "a_mul_c"]
+    },
+    {
+        "name": "bob",
+        "inputs": ["b"],
+        "outputs": ["a_add_b", "a_mul_c"]
+    }
+]
