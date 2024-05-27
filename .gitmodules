@@ -1,0 +1,6 @@
+[submodule "circom-2-arithc"]
+	path = circom-2-arithc
+	url = git@github.com:mhchia/circom-2-arithc.git
+[submodule "MP-SPDZ"]
+	path = MP-SPDZ
+	url = git@github.com:mhchia/MP-SPDZ.git
