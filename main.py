@@ -7,6 +7,8 @@ import subprocess
 from pathlib import Path
 import re
 
+import time
+
 
 class AGateType(Enum):
     ADD = 'AAdd'
@@ -345,10 +347,25 @@ def main():
         )
         print(f"Generated MP-SPDZ inputs for party {i} at {input_file_for_party_mpspdz}")
 
+    st = time.time()
     # Step 5: run MP-SPDZ circuit
     outputs = run_mpspdz_circuit(mpspdz_circuit_path)
     print(f"\n\n\n========= Computation has finished =========\n\n")
     print(f"Outputs: {outputs}")
+    et = time.time();
+    elapsed_time = et - st
+    print('\n\n\nCIRCOM Execution time:', elapsed_time, 'seconds')
+
+    rawpath = Path(str(mpspdz_circuit_path).replace("circuit", "raw_circuit"));
+    print(f"\n\n\nBENCH RAW MP-SPDZ circuit at {rawpath}")
+
+    st = time.time()
+    rawoutputs = run_mpspdz_circuit(rawpath)
+    print(f"\n\n\n========= Raw Computation has finished =========\n\n")
+    # print(f"Outputs: {rawoutputs}")
+    et = time.time();
+    elapsed_time = et - st
+    print('\n\n\nRAW Execution time:', elapsed_time, 'seconds')
 
 
 if __name__ == '__main__':
