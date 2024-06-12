@@ -7,23 +7,6 @@ Original file is located at
     https://colab.research.google.com/drive/1vU3qtkYyHlHF_1UFmtfZir76Aq_3HcSs
 """
 
-from util import if_else
-
-program.bit_length = 32
-
-def naive_search(n):
-	""" Search secret list for private input from Bob """
-	# hardcoded "secret" list from Alice - in a real application this should be a private input
-	a = [sint(i) for i in range(n)]
-	print_ln("Waiting for search input from Bob")
-	b = sint.get_input_from(1)
-
-	eq_bits = [x == b for x in a]
-	b_in_a = sum(eq_bits)
-	print_ln("Is b in Alice's list? %s", b_in_a.reveal())
-
-naive_search(100)
-
 in1txt = "in1";
 in2txt = "in2";
 outtxt = "out";
