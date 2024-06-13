@@ -1,7 +1,30 @@
 # circom-mp-spdz
 
 circom-MP-SPDZ allows parties to perform Multi-Party Computation (MPC) by writing Circom code using the MP-SPDZ framework. Circom code is compiled into an arithmetic circuit and then translated gate by gate to the corresponding MP-SPDZ operators. See the write-up to learn how it works (roughly) and the spec of inputs and outputs: [circom-mp-spdz write-up](https://hackmd.io/Iuu9yge4ShKBjawAcmFjvw?view).
+
 **NOTE:** Now circom-2-arithc also conveniently outputs the Bristol format with corresponding circuit_info (hence the json_arbistol is not necessary anymore).
+
+## Supported Circom Type and Op
+
+| Type            | Op                       | Supported |
+| --------------- | ------------------------ | :-------: |
+| **Int**         | `+`                 |    ✅     |
+|                 | `/`                  |    ✅     |
+|                 | `==`           |    ✅     |
+|                 | `>`            |    ✅     |
+|                 | `>=`             |    ✅     |
+|                 | `<`                  |    ✅     |
+|                 | `<=`                 |    ✅     |
+|                 | `*`       |    ✅     |
+|                 | `!=` |    ✅     |
+|                 | `-`     |    ✅     |
+|                 | `**`                |    ✅     |
+|                 | `<<`                 |    ✅     |
+|                 | `>>`                 |    ✅     |
+|                 | `^`                 |    ❌     |
+|                 | `|`                 |    ❌     |
+|                 | `&`                 |    ❌     |
+|                 | `%`                 |    ❌     |
 
 ## Structure
 - [circom-2-arithc](https://github.com/namnc/circom-2-arithc) - we're using commit [002670c](https://github.com/namnc/circom-2-arithc/commit/002670c9d0d59089deea9da4af113a16000e1769) not so far from the latest version of [circom-2-arithc](https://github.com/namnc/circom-2-arithc).
@@ -124,3 +147,6 @@ You can see the the intermediate files in the `outputs/naive_search` directory. 
 
 Outputs: {...}
 ```
+
+# Moving Forward
+The `circuit.mpc` program in the respective output folder can be used with MP-SPDZ in an appropriate deployment settings.
