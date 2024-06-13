@@ -10,7 +10,7 @@ template naive_search() {
    signal matches[N];
    signal sum[N];
 
-   sum[0] <== 0;
+   sum[0] <== 0 + 0;
    matches[0] <== in2 == in1[0];
 
    for (var i = 1; i < N; i++) {

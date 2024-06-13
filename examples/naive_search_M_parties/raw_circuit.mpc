@@ -1,0 +1,12 @@
+
+def naive_search(n):
+	# hardcoded "secret" list from Alice - in a real application this should be a private input
+	a = [sint(i) for i in range(n)]
+	print_ln("Waiting for search input from Bob")
+	b = sint.get_input_from(1)
+
+	eq_bits = [x == b for x in a]
+	b_in_a = sum(eq_bits)
+	print_ln("Is b in Alice's list? %s", b_in_a.reveal())
+
+naive_search(1000)

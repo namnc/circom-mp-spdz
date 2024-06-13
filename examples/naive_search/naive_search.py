@@ -7,9 +7,9 @@ Original file is located at
     https://colab.research.google.com/drive/1vU3qtkYyHlHF_1UFmtfZir76Aq_3HcSs
 """
 
-in1txt = "in1";
-in2txt = "in2";
-outtxt = "out";
+in1txt = "0.in1";
+in2txt = "0.in2";
+outtxt = "0.out";
 
 N = 1000;
 
@@ -21,9 +21,9 @@ for i in range(N):
   list[0]['inputs'].append(in1ops);
   in1dict[in1ops] = i;
 
-print(list);
-print(in1dict);
-print(in2dict);
+# print(list);
+# print(in1dict);
+# print(in2dict);
 
 import json
 with open('mpc_settings.json', 'w') as fp:

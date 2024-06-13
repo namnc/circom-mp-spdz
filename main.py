@@ -21,6 +21,16 @@ class AGateType(Enum):
     MUL = 'AMul'
     NEQ = 'ANeq'
     SUB = 'ASub'
+    BW_XOR = 'AXor'
+    POW = 'APow'
+    IDIV = 'AIntDiv'
+    MOD = 'AMod'
+    BW_SHL = 'AShiftL'
+    BW_SHR = 'AShiftR'
+    BW_OR = 'ABoolOr'
+    BW_AND = 'ABoolAnd'
+    # ABitOr,
+    # ABitAnd,
 
 
 MAP_GATE_TYPE_TO_OPERATOR_STR = {
@@ -34,13 +44,21 @@ MAP_GATE_TYPE_TO_OPERATOR_STR = {
     AGateType.GT: '>',
     AGateType.GEQ: '>=',
     AGateType.LEQ: '<=',
+    AGateType.BW_XOR: "^",
+    AGateType.POW: "**",
+    AGateType.IDIV: "/",
+    AGateType.MOD: "%",
+    AGateType.BW_SHL: "<<",
+    AGateType.BW_SHR: ">>",
+    AGateType.BW_OR: "|",
+    AGateType.BW_AND:"&"
 }
 
 
 
 PROJECT_ROOT = Path(__file__).parent
-CIRCOM_2_ARITHC_PROJECT_ROOT = PROJECT_ROOT / 'circom-2-arithc'
-MPSPDZ_PROJECT_ROOT = PROJECT_ROOT / 'MP-SPDZ'
+CIRCOM_2_ARITHC_PROJECT_ROOT = PROJECT_ROOT / '..' / 'circom-2-arithc'
+MPSPDZ_PROJECT_ROOT = PROJECT_ROOT / '..' / 'MP-SPDZ'
 MPSPDZ_CIRCUIT_DIR = MPSPDZ_PROJECT_ROOT / 'Programs' / 'Source'
 ARITHC_TO_BRISTOL_SCRIPT = PROJECT_ROOT / "arithc_to_bristol.py"
 EXAMPLES_DIR = PROJECT_ROOT / 'examples'
@@ -263,7 +281,7 @@ def generate_mpspdz_inputs_for_party(
     return input_file_for_party_mpspdz
 
 
-def run_mpspdz_circuit(mpspdz_circuit_path: Path) -> dict[str, int]:
+def run_mpspdz_circuit(mpspdz_circuit_path: Path, num_parties: int) -> dict[str, int]:
     # Run the MP-SPDZ interpreter to interpret the arithmetic circuit
     # mpspdz_circuit_path = 'tutorial.mpc'
     assert mpspdz_circuit_path.exists(), f"The MP-SPDZ circuit file {mpspdz_circuit_path} does not exist."
@@ -274,7 +292,7 @@ def run_mpspdz_circuit(mpspdz_circuit_path: Path) -> dict[str, int]:
     # circuit_name = 'tutorial'
     circuit_name = mpspdz_circuit_path.stem
     # Compile and run MP-SPDZ in the local machine
-    command = f'cd {MPSPDZ_PROJECT_ROOT} && Scripts/compile-run.py -E {MPC_PROTOCOL} {circuit_name} -M'
+    command = f'cd {MPSPDZ_PROJECT_ROOT} && PLAYERS={num_parties} Scripts/compile-run.py -E {MPC_PROTOCOL} {circuit_name} -M'
 
     result = subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 
@@ -297,7 +315,7 @@ def run_mpspdz_circuit(mpspdz_circuit_path: Path) -> dict[str, int]:
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Parse and convert arithc JSON to Bristol and circuit info files.")
+    parser = argparse.ArgumentParser(description="Compile circom to JSON and Bristol and circuit info files.")
     parser.add_argument("circuit_name", type=str, help="The name of the circuit (used for input/output file naming)")
 
     args = parser.parse_args()
@@ -318,14 +336,26 @@ def main():
     code = os.system(f"cd {CIRCOM_2_ARITHC_PROJECT_ROOT} && ./target/release/circom --input {circom_path} --output {output_dir}")
     if code != 0:
         raise ValueError(f"Failed to compile circom. Error code: {code}")
+    
+    # Step 1b: run circuit script
+    # python {circuit}.py
+    code = os.system(f"cd {circuit_dir} && python {circuit_name}.py")
+    if code != 0:
+        raise ValueError(f"Failed to run arithc-to-bristol. Error code: {code}")
+    
+    code = os.system(f"cd {circuit_dir} && cp ./raw_circuit.mpc {MPSPDZ_CIRCUIT_DIR}")
+    if code != 0:
+        raise ValueError(f"Failed to compile circom. Error code: {code}")
 
-
+    
     # Step 2: run arithc-to-bristol
     # python arithc_to_bristol.py {arithc_path} {output_dir}
     arithc_path = output_dir / "circuit.json"
-    code = os.system(f"python {ARITHC_TO_BRISTOL_SCRIPT} {arithc_path} {output_dir}")
-    if code != 0:
-        raise ValueError(f"Failed to run arithc-to-bristol. Error code: {code}")
+    ### NOW NOT NEEDED
+    # code = os.system(f"python {ARITHC_TO_BRISTOL_SCRIPT} {arithc_path} {output_dir}")
+    # if code != 0:
+    #     raise ValueError(f"Failed to run arithc-to-bristol. Error code: {code}")
+    ### NOW NOT NEEDED
 
     bristol_path = output_dir / "circuit.txt"
     circuit_info_path = output_dir / "circuit_info.json"
@@ -337,6 +367,10 @@ def main():
     )
     print(f"Generated MP-SPDZ circuit at {mpspdz_circuit_path}")
 
+    code = os.system(f"cd {MPSPDZ_CIRCUIT_DIR} && cp ./circuit.mpc {output_dir}")
+    if code != 0:
+        raise ValueError(f"Failed to compile circom. Error code: {code}")
+    
     # Step 4: generate MP-SPDZ inputs for each party
     for i, input_json_for_party_path in enumerate(input_json_path_for_each_party):
         input_file_for_party_mpspdz = generate_mpspdz_inputs_for_party(
@@ -349,10 +383,10 @@ def main():
 
     st = time.time()
     # Step 5: run MP-SPDZ circuit
-    outputs = run_mpspdz_circuit(mpspdz_circuit_path)
+    outputs = run_mpspdz_circuit(mpspdz_circuit_path, num_parties)
     print(f"\n\n\n========= Computation has finished =========\n\n")
     print(f"Outputs: {outputs}")
-    et = time.time();
+    et = time.time()
     elapsed_time = et - st
     print('\n\n\nCIRCOM Execution time:', elapsed_time, 'seconds')
 
@@ -360,10 +394,10 @@ def main():
     print(f"\n\n\nBENCH RAW MP-SPDZ circuit at {rawpath}")
 
     st = time.time()
-    rawoutputs = run_mpspdz_circuit(rawpath)
+    raw_outputs = run_mpspdz_circuit(rawpath, num_parties)
     print(f"\n\n\n========= Raw Computation has finished =========\n\n")
-    # print(f"Outputs: {rawoutputs}")
-    et = time.time();
+    print(f"Outputs: {raw_outputs}")
+    et = time.time()
     elapsed_time = et - st
     print('\n\n\nRAW Execution time:', elapsed_time, 'seconds')
 
