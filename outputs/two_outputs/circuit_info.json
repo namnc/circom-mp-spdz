@@ -1,0 +1,16 @@
+{
+    "input_name_to_wire_index": {
+        "a": 1,
+        "b": 0
+    },
+    "constants": {
+        "0.c_237280501353400085912628644948990840368": {
+            "value": 3,
+            "wire_index": 2
+        }
+    },
+    "output_name_to_wire_index": {
+        "a_add_b": 3,
+        "a_mul_c": 4
+    }
+}
