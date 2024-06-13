@@ -8,7 +8,7 @@ circom-MP-SPDZ allows parties to perform Multi-Party Computation (MPC) by writin
 
 | Type            | Op                       | Supported |
 | --------------- | ------------------------ | :-------: |
-| **Int**         | `+`      Addition           |    ✅     |
+| **Int** (sint, cint)        | `+`      Addition           |    ✅     |
 |                 | `/`      Division            |    ✅     |
 |                 | `==`     Equality      |    ✅     |
 |                 | `>`      Greater Than      |    ✅     |
