@@ -7,9 +7,9 @@ Original file is located at
     https://colab.research.google.com/drive/1vU3qtkYyHlHF_1UFmtfZir76Aq_3HcSs
 """
 
-inlisttxt = "inlist";
-intxt = "in";
-outtxt = "out";
+inlisttxt = "0.inlist";
+intxt = "0.in";
+outtxt = "0.out";
 
 M = 3; # 3 parties for list + 1 party for item
 N = 5;
