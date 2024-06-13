@@ -26,6 +26,8 @@ circom-MP-SPDZ allows parties to perform Multi-Party Computation (MPC) by writin
 |                 | `&`  Bitwise AND               |    ❌     |
 |                 | `%`  Modulo               |    ❌     |
 
+**NOTE** Int can also be used in quantization aware mode, by scaling every input with 2^f and shift left f after every multiplication of two scaled values.
+
 ## Structure
 - [circom-2-arithc](https://github.com/namnc/circom-2-arithc) - we're using commit [002670c](https://github.com/namnc/circom-2-arithc/commit/002670c9d0d59089deea9da4af113a16000e1769) not so far from the latest version of [circom-2-arithc](https://github.com/namnc/circom-2-arithc).
 - [MP-SPDZ](https://github.com/mhchia/MP-SPDZ/) - the custom MP-SPDZ framework to run the MPC protocol. We are using commit [704049e](https://github.com/mhchia/MP-SPDZ/commit/7eeb7e423e10bd023338d0dd60603b6624ab56eb).
