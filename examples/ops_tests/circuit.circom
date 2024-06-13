@@ -1,9 +1,8 @@
-pragma circom 2.0.0;
+pragma circom 2.1.0;
 
 
 
-template mpspdz() {
-    var N = 100;
+template mpspdz(N) {
 
     // ADD = 'AAdd'
 
@@ -108,65 +107,65 @@ template mpspdz() {
 
     // Below can only do with latest compiler
 
-    // // XOR = 'AXor',
+    // XOR = 'AXor',
 
-    // signal input in1_xor[N];
-    // signal input in2_xor[N];
-    // signal output out_xor[N];
+   //  signal input in1_xor[N];
+   //  signal input in2_xor[N];
+   //  signal output out_xor[N];
 
-    // for (var i = 0; i < N; i++) {
-    //    out_xor[i] <== in1_xor[i] ^ in2_xor[i];
-    // }
+   //  for (var i = 0; i < N; i++) {
+   //     out_xor[i] <== in1_xor[i] ^ in2_xor[i];
+   //  }
 
-    // // POW = 'APow',
+    // POW = 'APow',
 
-    // signal input in1_pow[N];
-    // signal input in2_pow[N];
-    // signal output out_pow[N];
+    signal input in1_pow[N];
+    signal input in2_pow[N];
+    signal output out_pow[N];
 
-    // for (var i = 0; i < N; i++) {
-    //    out_pow[i] <== in1_pow[i] ** in2_pow[i];
-    // }
+    for (var i = 0; i < N; i++) {
+       out_pow[i] <== in1_pow[i] ** in2_pow[i];
+    }
     
-    // // IDIV = 'AIntDiv',
+    // IDIV = 'AIntDiv',
 
-    // signal input in1_idiv[N];
-    // signal input in2_idiv[N];
-    // signal output out_idiv[N];
+    signal input in1_idiv[N];
+    signal input in2_idiv[N];
+    signal output out_idiv[N];
 
-    // for (var i = 0; i < N; i++) {
-    //    out_idiv[i] <== in1_idiv[i] \ in2_idiv[i];
-    // }
+    for (var i = 0; i < N; i++) {
+       out_idiv[i] <== in1_idiv[i] \ in2_idiv[i];
+    }
 
-    // // MOD = 'AMod',
+    // MOD = 'AMod',
 
-    // signal input in1_mod[N];
-    // signal input in2_mod[N];
-    // signal output out_mod[N];
+   //  signal input in1_mod[N];
+   //  signal input in2_mod[N];
+   //  signal output out_mod[N];
 
-    // for (var i = 0; i < N; i++) {
-    //     out_mod[i] <== in1_mod[i] % in2_mod[i];
-    // }
+   //  for (var i = 0; i < N; i++) {
+   //      out_mod[i] <== in1_mod[i] % in2_mod[i];
+   //  }
 
-    // // SHL = 'AShiftL',
+    // SHL = 'AShiftL',
 
-    // signal input in1_shl[N];
-    // signal input in2_shl[N];
-    // signal output out_shl[N];
+    signal input in1_shl[N];
+    signal input in2_shl[N];
+    signal output out_shl[N];
 
-    // for (var i = 0; i < N; i++) {
-    //     out_shl[i] <== in1_shl[i] << in2_shl[i];
-    // }
+    for (var i = 0; i < N; i++) {
+        out_shl[i] <== in1_shl[i] << in2_shl[i];
+    }
 
-    // // SHR = 'AShiftR'
+    // SHR = 'AShiftR'
 
-    // signal input in1_shr[N];
-    // signal input in2_shr[N];
-    // signal output out_shr[N];
+    signal input in1_shr[N];
+    signal input in2_shr[N];
+    signal output out_shr[N];
 
-    // for (var i = 0; i < N; i++) {
-    //     out_shr[i] <== in1_shr[i] >> in2_shr[i];
-    // }   
+    for (var i = 0; i < N; i++) {
+        out_shr[i] <== in1_shr[i] >> in2_shr[i];
+    }   
 }
 
-component main = mpspdz();
+component main = mpspdz(100);
