@@ -22,7 +22,7 @@ circom-MP-SPDZ allows parties to perform Multi-Party Computation (MPC) by writin
 |                 | `<<`                 |    ✅     |
 |                 | `>>`                 |    ✅     |
 |                 | `^`                 |    ❌     |
-|                 | `|`                 |    ❌     |
+|                 | `\|`                 |    ❌     |
 |                 | `&`                 |    ❌     |
 |                 | `%`                 |    ❌     |
 
