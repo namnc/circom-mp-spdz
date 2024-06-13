@@ -8,23 +8,23 @@ circom-MP-SPDZ allows parties to perform Multi-Party Computation (MPC) by writin
 
 | Type            | Op                       | Supported |
 | --------------- | ------------------------ | :-------: |
-| **Int**         | `+`                 |    ✅     |
-|                 | `/`                  |    ✅     |
-|                 | `==`           |    ✅     |
-|                 | `>`            |    ✅     |
-|                 | `>=`             |    ✅     |
-|                 | `<`                  |    ✅     |
-|                 | `<=`                 |    ✅     |
-|                 | `*`       |    ✅     |
-|                 | `!=` |    ✅     |
-|                 | `-`     |    ✅     |
-|                 | `**`                |    ✅     |
-|                 | `<<`                 |    ✅     |
-|                 | `>>`                 |    ✅     |
-|                 | `^`                 |    ❌     |
-|                 | `\|`                 |    ❌     |
-|                 | `&`                 |    ❌     |
-|                 | `%`                 |    ❌     |
+| **Int**         | `+`      Addition           |    ✅     |
+|                 | `/`      Division            |    ✅     |
+|                 | `==`     Equality      |    ✅     |
+|                 | `>`      Greater Than      |    ✅     |
+|                 | `>=`     Greater Than or Equal        |    ✅     |
+|                 | `<`      Less Than            |    ✅     |
+|                 | `<=`     Less Than or Equal            |    ✅     |
+|                 | `*`   Multiplication     |    ✅     |
+|                 | `!=` Not Equal |    ✅     |
+|                 | `-`  Subtraction   |    ✅     |
+|                 | `**` Exponentiation               |    ✅     |
+|                 | `<<` Shift Left                |    ✅     |
+|                 | `>>` Shift Right                |    ✅     |
+|                 | `^`  Bitwise XOR               |    ❌     |
+|                 | `\|` Bitwise OR                |    ❌     |
+|                 | `&`  Bitwise AND               |    ❌     |
+|                 | `%`  Modulo               |    ❌     |
 
 ## Structure
 - [circom-2-arithc](https://github.com/namnc/circom-2-arithc) - we're using commit [002670c](https://github.com/namnc/circom-2-arithc/commit/002670c9d0d59089deea9da4af113a16000e1769) not so far from the latest version of [circom-2-arithc](https://github.com/namnc/circom-2-arithc).
