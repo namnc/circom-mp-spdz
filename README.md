@@ -1,15 +1,15 @@
 # circom-mp-spdz
 
-circom-MP-SPDZ allows parties to perform Multi-Party Computation (MPC) by writing Circom code using the MP-SPDZ framework. Circom code is converted to an arithmetic circuit and then translated gate by gate to the corresponding MP-SPDZ operators. See the write-up to learn how it works and the spec of inputs and outputs: [circom-mp-spdz write-up](https://hackmd.io/Iuu9yge4ShKBjawAcmFjvw?view).
+circom-MP-SPDZ allows parties to perform Multi-Party Computation (MPC) by writing Circom code using the MP-SPDZ framework. Circom code is compiled into an arithmetic circuit and then translated gate by gate to the corresponding MP-SPDZ operators. See the write-up to learn how it works (roughly) and the spec of inputs and outputs: [circom-mp-spdz write-up](https://hackmd.io/Iuu9yge4ShKBjawAcmFjvw?view).
+**NOTE:** Now circom-2-arithc also conveniently outputs the Bristol format with corresponding circuit_info (hence the json_arbistol is not necessary anymore).
 
 ## Structure
-- [circom-2-arithc](./circom-2-arithc) - we're using a forked version of circom-2-arithc that supports the old arithmetic circuit format, which is not compatible with the latest version of [circom-2-arithc](https://github.com/namnc/circom-2-arithc).
-- [MP-SPDZ](./MP-SPDZ) - the MP-SPDZ framework to run the MPC protocol.
-- [arithc_to_bristol.py](./arithc_to_bristol.py) - a script to convert the arithmetic circuit to the Bristol format.
+- [circom-2-arithc](https://github.com/namnc/circom-2-arithc) - we're using commit [002670c](https://github.com/namnc/circom-2-arithc/commit/002670c9d0d59089deea9da4af113a16000e1769) not so far from the latest version of [circom-2-arithc](https://github.com/namnc/circom-2-arithc).
+- [MP-SPDZ](https://github.com/mhchia/MP-SPDZ/) - the custom MP-SPDZ framework to run the MPC protocol. We are using commit [704049e](https://github.com/mhchia/MP-SPDZ/commit/7eeb7e423e10bd023338d0dd60603b6624ab56eb).
+- [arithc_to_bristol.py](./arithc_to_bristol.py) - a script to transplie the arithmetic Bristol format to MP-SPDZ .mpc program.
 - [main.py](./main.py) - the main script to run the circom-mp-spdz. It does the following:
   - Compiles the Circom code to the arithmetic circuit with `circom-2-arithc`.
-  - Converts the arithmetic circuit to the Bristol format with `arithc_to_bristol.py`.
-  - Generates an MP-SPDZ circuit from the Bristol format circuit.
+  - Generates an MP-SPDZ circuit from the Bristol format circuit with `arithc_to_bristol.py`.
   - Generates MP-SPDZ input files for each party from the `inputs_party_i.json`.
   - Performs the computation using MP-SPDZ by running all parties on the local machine.
   - Prints the outputs.
@@ -20,15 +20,9 @@ circom-MP-SPDZ allows parties to perform Multi-Party Computation (MPC) by writin
 ### Clone the repo
 
 ```bash
-git clone --recurse-submodules https://github.com/namnc/circom-mp-spdz.git
-cd circom-mp-spdz
-```
-
-If you forgot to clone with `--recurse-submodules`
-
-```bash
-git submodule init
-git submodule update
+git clone https://github.com/namnc/circom-mp-spdz.git
+git clone https://github.com/namnc/circom-2-arithc
+git clone https://github.com/mhchia/MP-SPDZ/
 ```
 
 ### Build circom-2-arithc
@@ -39,8 +33,10 @@ cd circom-2-arithc
 
 Initialize the .env file:
 ```bash
-cp .env.example .env
+touch .env
+vim .env
 ```
+and add LOG_LEVEL="DEBUG"
 
 Build the compiler:
 
@@ -50,9 +46,12 @@ cargo build --release
 
 ### Build MP-SPDZ
 
+You may need to install some dependencies, see: [MP-SPDZ](https://github.com/mhchia/MP-SPDZ/).
+
 Go to the MP-SPDZ submodule directory:
 ```bash
 cd ../MP-SPDZ
+git checkout 704049e
 ```
 
 Build the MPC VM for `semi` protocol
@@ -66,8 +65,8 @@ ls semi-party.x
 ## How to run
 
 We have two examples available
-- [two_outputs](./examples/two_outputs/) - a simple circuit with only 3 inputs, 2 gates, and 2 outputs
-- [nn_circuit_small](./examples/nn_circuit_small/) - a small neural network circuit, which is more complex
+- [ops_tests](./examples/ops_tests/) - a benchmark of supported ops for sint
+- [naive_search](./examples/naive_search/) - a benchmark of naive search
 
 In both examples, we assume there are only 2 parties. You will find the following files in each example directory:
 - `circuit.circom` - the circom code representing the circuit to be computed by all parties
@@ -87,41 +86,41 @@ You can run these examples by following the instructions in the root directory.
 cd ..
 python main.py {circuit_name}
 ```
-- `{circuit_name}` is the name of the circuit you want to run. Can either be `two_outputs` or `nn_circuit_small`.
-- Intermediate files will be stored in the `outputs/{circuit_name}` directory.
+- `{circuit_name}` is the name of the circuit you want to run. Can either be `ops_tests` or `naive_search`.
+- Intermediate files will be stored in the `outputs/{circuit_name}` directory. **NOTE**: we also output `circuit.mpc` which you can use to run with the original MP-SPDZ.
 - Outputs are directly printed to the console.
 
 
 
-#### Example `two_outputs`
+#### Example `ops_tests`
 
 ```bash
-python main.py two_outputs
+python main.py ops_tests
 ```
 
-You can see the the intermediate files in the `outputs/two_outputs` directory. And you should see the following outputs in the console:
+You can see the the intermediate files in the `outputs/ops_tests` directory. And you should see the following outputs in the console:
 
 ```bash
 ...
 ========= Computation has finished =========
 
 
-Outputs: {'a_add_b': 3, 'a_mul_c': 3}
+Outputs: {...}
 ```
 
 
-#### Example `nn_circuit_small`
+#### Example `naive_search`
 
 ```bash
-python main.py nn_circuit_small
+python main.py naive_search
 ```
 
-You can see the the intermediate files in the `outputs/nn_circuit_small` directory. And you should see the following outputs in the console:
+You can see the the intermediate files in the `outputs/naive_search` directory. And you should see the following outputs in the console:
 
 ```bash
 ...
 ========= Computation has finished =========
 
 
-Outputs: {'out[0]': 11846134085, 'out[1]': 12770577881, 'out[2]': 13695021677, 'out[3]': 14619465473}
+Outputs: {...}
 ```
