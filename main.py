@@ -366,6 +366,10 @@ def main():
         mpc_settings_path,
     )
     print(f"Generated MP-SPDZ circuit at {mpspdz_circuit_path}")
+
+    code = os.system(f"cd {MPSPDZ_CIRCUIT_DIR} && cp ./circuit.mpc {output_dir}")
+    if code != 0:
+        raise ValueError(f"Failed to compile circom. Error code: {code}")
     
     # Step 4: generate MP-SPDZ inputs for each party
     for i, input_json_for_party_path in enumerate(input_json_path_for_each_party):
