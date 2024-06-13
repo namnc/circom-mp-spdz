@@ -7,9 +7,9 @@ Original file is located at
     https://colab.research.google.com/drive/1vU3qtkYyHlHF_1UFmtfZir76Aq_3HcSs
 """
 
-inlisttxt = "0.inlist";
-intxt = "0.in";
-outtxt = "0.out";
+inlisttxt = "inlist";
+intxt = "in";
+outtxt = "out";
 
 M = 3; # 3 parties for list + 1 party for item
 N = 5;
@@ -18,7 +18,7 @@ list = [];
 inlistdictlist = [];
 for i in range(M):
     inlistdict = {};
-    list.append({ "name": f"p{i}", "inputs": [], "outputs": [] });
+    list.append({ "name": f"p{i}", "inputs": [], "outputs": [outtxt] });
     for j in range(N):
         inlistops = inlisttxt + "["+ str(i) + "]" + "["+ str(j) + "]";
         list[i]['inputs'].append(inlistops);

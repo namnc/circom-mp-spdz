@@ -1,21 +1,21 @@
 {
   "input_name_to_wire_index": {
-    "0.inlist[0][4]": 6,
-    "0.inlist[1][0]": 4,
-    "0.in": 7,
-    "0.inlist[0][2]": 8,
-    "0.inlist[2][4]": 10,
-    "0.inlist[2][3]": 1,
-    "0.inlist[2][0]": 0,
-    "0.inlist[1][1]": 9,
-    "0.inlist[2][2]": 11,
-    "0.inlist[1][3]": 5,
-    "0.inlist[1][4]": 13,
-    "0.inlist[2][1]": 15,
-    "0.inlist[0][1]": 3,
-    "0.inlist[0][0]": 14,
-    "0.inlist[0][3]": 2,
-    "0.inlist[1][2]": 12
+    "inlist[2][2]": 4,
+    "inlist[0][3]": 10,
+    "inlist[0][0]": 11,
+    "inlist[2][4]": 13,
+    "inlist[1][0]": 1,
+    "inlist[2][1]": 2,
+    "inlist[0][4]": 12,
+    "inlist[0][2]": 7,
+    "inlist[1][3]": 0,
+    "inlist[2][0]": 8,
+    "inlist[2][3]": 15,
+    "inlist[1][2]": 9,
+    "inlist[0][1]": 14,
+    "inlist[1][1]": 6,
+    "inlist[1][4]": 5,
+    "in": 3
   },
   "constants": {
     "0.const_signal_0": {
@@ -24,6 +24,6 @@
     }
   },
   "output_name_to_wire_index": {
-    "0.out": 42
+    "out": 42
   }
 }
