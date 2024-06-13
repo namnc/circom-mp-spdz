@@ -7,9 +7,9 @@ Original file is located at
     https://colab.research.google.com/drive/1vU3qtkYyHlHF_1UFmtfZir76Aq_3HcSs
 """
 
-in1txt = "in1";
-in2txt = "in2";
-outtxt = "out";
+in1txt = "0.in1";
+in2txt = "0.in2";
+outtxt = "0.out";
 
 N = 1000;
 

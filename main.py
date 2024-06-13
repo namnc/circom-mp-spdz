@@ -281,7 +281,7 @@ def generate_mpspdz_inputs_for_party(
     return input_file_for_party_mpspdz
 
 
-def run_mpspdz_circuit(mpspdz_circuit_path: Path) -> dict[str, int]:
+def run_mpspdz_circuit(mpspdz_circuit_path: Path, num_parties: int) -> dict[str, int]:
     # Run the MP-SPDZ interpreter to interpret the arithmetic circuit
     # mpspdz_circuit_path = 'tutorial.mpc'
     assert mpspdz_circuit_path.exists(), f"The MP-SPDZ circuit file {mpspdz_circuit_path} does not exist."
@@ -292,7 +292,7 @@ def run_mpspdz_circuit(mpspdz_circuit_path: Path) -> dict[str, int]:
     # circuit_name = 'tutorial'
     circuit_name = mpspdz_circuit_path.stem
     # Compile and run MP-SPDZ in the local machine
-    command = f'cd {MPSPDZ_PROJECT_ROOT} && Scripts/compile-run.py -E {MPC_PROTOCOL} {circuit_name} -M -N 4'
+    command = f'cd {MPSPDZ_PROJECT_ROOT} && PLAYERS={num_parties} Scripts/compile-run.py -E {MPC_PROTOCOL} {circuit_name} -M'
 
     result = subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 
@@ -383,7 +383,7 @@ def main():
 
     st = time.time()
     # Step 5: run MP-SPDZ circuit
-    outputs = run_mpspdz_circuit(mpspdz_circuit_path)
+    outputs = run_mpspdz_circuit(mpspdz_circuit_path, num_parties)
     print(f"\n\n\n========= Computation has finished =========\n\n")
     print(f"Outputs: {outputs}")
     et = time.time()
@@ -394,7 +394,7 @@ def main():
     print(f"\n\n\nBENCH RAW MP-SPDZ circuit at {rawpath}")
 
     st = time.time()
-    raw_outputs = run_mpspdz_circuit(rawpath)
+    raw_outputs = run_mpspdz_circuit(rawpath, num_parties)
     print(f"\n\n\n========= Raw Computation has finished =========\n\n")
     print(f"Outputs: {raw_outputs}")
     et = time.time()
