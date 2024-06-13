@@ -20,9 +20,9 @@ Original file is located at
 ]
 """
 
-in1txt = "0.in1";
-in2txt = "0.in2";
-outtxt = "0.out";
+in1txt = "in1";
+in2txt = "in2";
+outtxt = "out";
 # ops = ["add", "div", "eq", "gt", "geq", "lt", "leq", "mul", "neq", "sub", "xor", "pow", "idiv", "mod", "shl", "shr"];
 ops = ["add", "div", "eq", "gt", "geq", "lt", "leq", "mul", "neq", "sub", "pow", "idiv", "shl", "shr"];
 
