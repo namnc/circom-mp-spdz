@@ -21,9 +21,9 @@ for i in range(N):
   list[0]['inputs'].append(in1ops);
   in1dict[in1ops] = i;
 
-print(list);
-print(in1dict);
-print(in2dict);
+# print(list);
+# print(in1dict);
+# print(in2dict);
 
 import json
 with open('mpc_settings.json', 'w') as fp:

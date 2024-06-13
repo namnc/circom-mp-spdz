@@ -292,7 +292,7 @@ def run_mpspdz_circuit(mpspdz_circuit_path: Path) -> dict[str, int]:
     # circuit_name = 'tutorial'
     circuit_name = mpspdz_circuit_path.stem
     # Compile and run MP-SPDZ in the local machine
-    command = f'cd {MPSPDZ_PROJECT_ROOT} && Scripts/compile-run.py -E {MPC_PROTOCOL} {circuit_name} -M'
+    command = f'cd {MPSPDZ_PROJECT_ROOT} && Scripts/compile-run.py -E {MPC_PROTOCOL} {circuit_name} -M -N 4'
 
     result = subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 
