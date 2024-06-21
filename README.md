@@ -54,6 +54,7 @@ git clone https://github.com/mhchia/MP-SPDZ/
 Go to the circom-2-arithc submodule directory:
 ```bash
 cd circom-2-arithc
+git checkout 8d41881
 ```
 
 Initialize the .env file:
