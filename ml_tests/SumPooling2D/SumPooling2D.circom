@@ -24,3 +24,5 @@ template SumPooling2D (nRows, nCols, nChannels, poolSize, strides) {
         }
     }
 }
+
+component main = SumPooling2D(7,11,5,3,2);
