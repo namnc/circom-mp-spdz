@@ -1,6 +1,6 @@
 pragma circom 2.0.0;
 
-include "./util.circom";
+include "../util.circom";
 
 // ReLU layer
 template ReLU () {
@@ -13,3 +13,5 @@ template ReLU () {
     
     out <== in * isPositive.out;
 }
+
+component main = ReLU();
