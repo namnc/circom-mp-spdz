@@ -1,4 +1,3 @@
-
 nRows = 7
 nCols = 11
 nChannels = 5

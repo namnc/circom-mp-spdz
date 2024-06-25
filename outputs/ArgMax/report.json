@@ -1,0 +1,247 @@
+{
+  "inputs": [
+    {
+      "id": 40,
+      "names": [
+        "Switcher.const_signal_0"
+      ],
+      "value": 0
+    },
+    {
+      "id": 55,
+      "names": [
+        "Switcher.const_signal_0"
+      ],
+      "value": 0
+    },
+    {
+      "id": 61,
+      "names": [
+        "0.in[0]",
+        "0.maxs[0]",
+        "Switcher.L",
+        "Switcher.R"
+      ],
+      "value": null
+    },
+    {
+      "id": 64,
+      "names": [
+        "0.const_signal_0",
+        "0.amaxs[0]",
+        "Switcher.L",
+        "Switcher.R"
+      ],
+      "value": 0
+    },
+    {
+      "id": 80,
+      "names": [
+        "Switcher.const_signal_0"
+      ],
+      "value": 0
+    },
+    {
+      "id": 95,
+      "names": [
+        "Switcher.const_signal_0"
+      ],
+      "value": 0
+    },
+    {
+      "id": 101,
+      "names": [
+        "0.in[1]",
+        "Switcher.R"
+      ],
+      "value": null
+    },
+    {
+      "id": 105,
+      "names": [
+        "0.const_signal_1",
+        "Switcher.R"
+      ],
+      "value": 1
+    },
+    {
+      "id": 121,
+      "names": [
+        "Switcher.const_signal_0"
+      ],
+      "value": 0
+    },
+    {
+      "id": 136,
+      "names": [
+        "Switcher.const_signal_0"
+      ],
+      "value": 0
+    },
+    {
+      "id": 142,
+      "names": [
+        "0.in[2]",
+        "Switcher.R"
+      ],
+      "value": null
+    },
+    {
+      "id": 146,
+      "names": [
+        "0.const_signal_2",
+        "Switcher.R"
+      ],
+      "value": 2
+    },
+    {
+      "id": 162,
+      "names": [
+        "Switcher.const_signal_0"
+      ],
+      "value": 0
+    },
+    {
+      "id": 177,
+      "names": [
+        "Switcher.const_signal_0"
+      ],
+      "value": 0
+    },
+    {
+      "id": 183,
+      "names": [
+        "0.in[3]",
+        "Switcher.R"
+      ],
+      "value": null
+    },
+    {
+      "id": 187,
+      "names": [
+        "0.const_signal_3",
+        "Switcher.R"
+      ],
+      "value": 3
+    },
+    {
+      "id": 203,
+      "names": [
+        "Switcher.const_signal_0"
+      ],
+      "value": 0
+    },
+    {
+      "id": 218,
+      "names": [
+        "Switcher.const_signal_0"
+      ],
+      "value": 0
+    },
+    {
+      "id": 224,
+      "names": [
+        "0.in[4]",
+        "Switcher.R"
+      ],
+      "value": null
+    },
+    {
+      "id": 228,
+      "names": [
+        "0.const_signal_4",
+        "Switcher.R"
+      ],
+      "value": 4
+    }
+  ],
+  "outputs": [
+    {
+      "id": 43,
+      "names": [
+        "Switcher.outR"
+      ],
+      "value": null
+    },
+    {
+      "id": 58,
+      "names": [
+        "Switcher.outR"
+      ],
+      "value": null
+    },
+    {
+      "id": 83,
+      "names": [
+        "Switcher.outR"
+      ],
+      "value": null
+    },
+    {
+      "id": 98,
+      "names": [
+        "Switcher.outR"
+      ],
+      "value": null
+    },
+    {
+      "id": 124,
+      "names": [
+        "Switcher.outR"
+      ],
+      "value": null
+    },
+    {
+      "id": 139,
+      "names": [
+        "Switcher.outR"
+      ],
+      "value": null
+    },
+    {
+      "id": 165,
+      "names": [
+        "Switcher.outR"
+      ],
+      "value": null
+    },
+    {
+      "id": 180,
+      "names": [
+        "Switcher.outR"
+      ],
+      "value": null
+    },
+    {
+      "id": 206,
+      "names": [
+        "Switcher.outR"
+      ],
+      "value": null
+    },
+    {
+      "id": 221,
+      "names": [
+        "Switcher.outR"
+      ],
+      "value": null
+    },
+    {
+      "id": 230,
+      "names": [
+        "Switcher.outL",
+        "0.maxs[5]"
+      ],
+      "value": null
+    },
+    {
+      "id": 231,
+      "names": [
+        "Switcher.outL",
+        "0.amaxs[5]",
+        "0.out"
+      ],
+      "value": null
+    }
+  ]
+}
