@@ -7006,6 +7006,14 @@
         "0.in2"
       ],
       "value": null
+    },
+    {
+      "id": 3004,
+      "names": [
+        "0.const_signal_0",
+        "0.sum[0]"
+      ],
+      "value": 0
     }
   ],
   "outputs": [

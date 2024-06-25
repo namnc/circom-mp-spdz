@@ -333,13 +333,13 @@ def main():
     output_dir = PROJECT_ROOT / Path("outputs") / circuit_name
     output_dir.mkdir(parents=True, exist_ok=True)
     # Step 1: run circom-2-arithc
-    code = os.system(f"cd {CIRCOM_2_ARITHC_PROJECT_ROOT} && ./target/release/circom --input {circom_path} --output {output_dir}")
+    code = os.system(f"cd {CIRCOM_2_ARITHC_PROJECT_ROOT} && ./target/release/circom-2-arithc --input {circom_path} --output {output_dir}")
     if code != 0:
         raise ValueError(f"Failed to compile circom. Error code: {code}")
     
     # Step 1b: run circuit script
     # python {circuit}.py
-    code = os.system(f"cd {circuit_dir} && python {circuit_name}.py")
+    code = os.system(f"cd {circuit_dir} && python3 {circuit_name}.py")
     if code != 0:
         raise ValueError(f"Failed to run {circuit_name}.py. Error code: {code}")
     
