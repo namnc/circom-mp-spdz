@@ -324,10 +324,6 @@ def main():
     circuit_dir = EXAMPLES_DIR / circuit_name
     circom_path = circuit_dir / f"{circuit_name}.circom"
     mpc_settings_path = circuit_dir / "mpc_settings.json"
-    with open(mpc_settings_path, 'r') as f:
-        mpc_settings = json.load(f)
-    num_parties = len(mpc_settings)
-    input_json_path_for_each_party = [circuit_dir / f"inputs_party_{i}.json" for i in range(num_parties)]
 
     # ./outputs/{circuit_name}/...
     output_dir = PROJECT_ROOT / Path("outputs") / circuit_name
@@ -342,6 +338,11 @@ def main():
     code = os.system(f"cd {circuit_dir} && python3 {circuit_name}.py")
     if code != 0:
         raise ValueError(f"Failed to run {circuit_name}.py. Error code: {code}")
+    
+    with open(mpc_settings_path, 'r') as f:
+        mpc_settings = json.load(f)
+    num_parties = len(mpc_settings)
+    input_json_path_for_each_party = [circuit_dir / f"inputs_party_{i}.json" for i in range(num_parties)]
     
     # code = os.system(f"cd {circuit_dir} && cp ./raw_circuit.mpc {MPSPDZ_CIRCUIT_DIR}")
     # if code != 0:

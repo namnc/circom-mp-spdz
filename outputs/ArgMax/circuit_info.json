@@ -1,27 +1,15 @@
 {
   "input_name_to_wire_index": {
-    "0.in[2]": 0,
-    "0.in[4]": 1,
+    "0.in[4]": 4,
+    "0.in[1]": 0,
     "0.in[0]": 2,
-    "0.in[3]": 4,
-    "0.in[1]": 3
+    "0.in[2]": 3,
+    "0.in[3]": 1
   },
   "constants": {
     "0.const_signal_1": {
       "value": "1",
       "wire_index": 26
-    },
-    "0.const_signal_3": {
-      "value": "3",
-      "wire_index": 54
-    },
-    "Switcher.const_signal_0": {
-      "value": "0",
-      "wire_index": 65
-    },
-    "0.const_signal_4": {
-      "value": "4",
-      "wire_index": 68
     },
     "0.const_signal_2": {
       "value": "2",
@@ -30,6 +18,18 @@
     "0.const_signal_0": {
       "value": "0",
       "wire_index": 12
+    },
+    "Switcher.const_signal_0": {
+      "value": "0",
+      "wire_index": 37
+    },
+    "0.const_signal_3": {
+      "value": "3",
+      "wire_index": 54
+    },
+    "0.const_signal_4": {
+      "value": "4",
+      "wire_index": 68
     }
   },
   "output_name_to_wire_index": {
