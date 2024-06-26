@@ -1,0 +1,16 @@
+{
+  "input_name_to_wire_index": {
+    "0.in[0][0][0]": 0,
+    "0.b[0]": 1,
+    "0.a[0]": 2
+  },
+  "constants": {
+    "0.const_signal_1000": {
+      "value": "1000",
+      "wire_index": 5
+    }
+  },
+  "output_name_to_wire_index": {
+    "0.out[0][0][0]": 6
+  }
+}

@@ -22,7 +22,7 @@ template BatchNormalization2D(nRows, nCols, nChannels, n) {
     }
 }
 
-// component main { public [ out ] } = BatchNormalization2D(1, 1, 1, 1000);
+component main = BatchNormalization2D(1, 1, 1, 1000);
 
 /* INPUT = {
     "in":  ["123"],

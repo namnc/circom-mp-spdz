@@ -1,0 +1,41 @@
+{
+  "inputs": [
+    {
+      "id": 1,
+      "names": [
+        "0.in[0][0][0]"
+      ],
+      "value": null
+    },
+    {
+      "id": 2,
+      "names": [
+        "0.a[0]"
+      ],
+      "value": null
+    },
+    {
+      "id": 3,
+      "names": [
+        "0.b[0]"
+      ],
+      "value": null
+    },
+    {
+      "id": 7,
+      "names": [
+        "0.const_signal_1000"
+      ],
+      "value": 1000
+    }
+  ],
+  "outputs": [
+    {
+      "id": 9,
+      "names": [
+        "0.out[0][0][0]"
+      ],
+      "value": null
+    }
+  ]
+}
