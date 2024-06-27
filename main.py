@@ -304,7 +304,7 @@ def run_mpspdz_circuit(mpspdz_circuit_path: Path, num_parties: int) -> dict[str,
     # "outputs[0]: keras_tensor_3=16"
     # "outputs[1]: keras_tensor_4[0][0]=8.47524e+32"
     # ...
-    output_pattern = re.compile(r"outputs\[\d+\]: (\w+(?:\[\d+\])*)=(.+)$")
+    output_pattern = re.compile(r"outputs\[\d+\]: 0.(\w+(?:\[\d+\])*)=(.+)$")
     outputs = {}
     for line in result.stdout.splitlines():
         match = output_pattern.search(line)
@@ -333,7 +333,7 @@ def main():
     output_dir = PROJECT_ROOT / Path("outputs") / circuit_name
     output_dir.mkdir(parents=True, exist_ok=True)
     # Step 1: run circom-2-arithc
-    code = os.system(f"cd {CIRCOM_2_ARITHC_PROJECT_ROOT} && ./target/release/circom --input {circom_path} --output {output_dir}")
+    code = os.system(f"cd {CIRCOM_2_ARITHC_PROJECT_ROOT} && ./target/release/circom-2-arithc --input {circom_path} --output {output_dir}")
     if code != 0:
         raise ValueError(f"Failed to compile circom. Error code: {code}")
     
@@ -341,11 +341,11 @@ def main():
     # python {circuit}.py
     code = os.system(f"cd {circuit_dir} && python {circuit_name}.py")
     if code != 0:
-        raise ValueError(f"Failed to run arithc-to-bristol. Error code: {code}")
+        raise ValueError(f"Failed to run {circuit_name}.py. Error code: {code}")
     
     code = os.system(f"cd {circuit_dir} && cp ./raw_circuit.mpc {MPSPDZ_CIRCUIT_DIR}")
     if code != 0:
-        raise ValueError(f"Failed to compile circom. Error code: {code}")
+        raise ValueError(f"Failed to copy raw_circuit.mpc. Error code: {code}")
 
     
     # Step 2: run arithc-to-bristol
@@ -369,7 +369,7 @@ def main():
 
     code = os.system(f"cd {MPSPDZ_CIRCUIT_DIR} && cp ./circuit.mpc {output_dir}")
     if code != 0:
-        raise ValueError(f"Failed to compile circom. Error code: {code}")
+        raise ValueError(f"Failed to generate circuit.mpc. Error code: {code}")
     
     # Step 4: generate MP-SPDZ inputs for each party
     for i, input_json_for_party_path in enumerate(input_json_path_for_each_party):
