@@ -1,7 +1,7 @@
 pragma circom 2.0.0;
 
-include "../circomlib-matrix/matElemMul.circom";
-include "../circomlib-matrix/matElemSum.circom";
+include "./matElemMul.circom";
+include "./matElemSum.circom";
 
 // matrix multiplication
 template matMul (m,n,p) {
@@ -27,5 +27,3 @@ template matMul (m,n,p) {
         }
     }
 }
-
-component main = matMul(3, 4, 5);

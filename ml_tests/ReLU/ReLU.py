@@ -1,5 +1,3 @@
-import random
-
 n = 5
 
 intxt = "0.in"
@@ -12,7 +10,7 @@ with open('mpc_settings.json', 'w') as fp:
     json.dump(list, fp)
 
 with open('inputs_party_0.json', 'w') as fp:
-    json.dump({"0.in": random.randint(1, 100)}, fp)
+    json.dump({"0.in": 0}, fp)
 
 with open('inputs_party_1.json', 'w') as fp:
     json.dump({}, fp)

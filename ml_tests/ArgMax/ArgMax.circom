@@ -17,7 +17,8 @@ template ArgMax (n) {
     signal amaxs[n+1];
 
     maxs[0] <== in[0];
-    amaxs[0] <== 0;
+    var zero = 0;
+    amaxs[0] <== zero;
     for(var i = 0; i < n; i++) {
         gts[i] <== in[i] > maxs[i]; // changed to 252 (maximum) for better compatibility
         switchers[i+1] = Switcher();
