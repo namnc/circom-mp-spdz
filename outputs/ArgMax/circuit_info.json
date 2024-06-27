@@ -1,35 +1,71 @@
 {
   "input_name_to_wire_index": {
-    "0.in[4]": 3,
-    "0.in[0]": 1,
-    "0.in[3]": 4,
-    "0.in[1]": 2,
-    "0.in[2]": 0
+    "0.in[0]": 3,
+    "0.in[2]": 2,
+    "0.in[4]": 4,
+    "0.in[3]": 0,
+    "0.in[1]": 1
   },
   "constants": {
-    "0.const_signal_3": {
-      "value": "3",
-      "wire_index": 54
+    "Switcher.const_signal_0_111": {
+      "value": "0",
+      "wire_index": 51
     },
-    "0.const_signal_1": {
-      "value": "1",
-      "wire_index": 26
-    },
-    "0.const_signal_4": {
-      "value": "4",
-      "wire_index": 68
-    },
-    "0.const_signal_2": {
-      "value": "2",
-      "wire_index": 40
-    },
-    "0.const_signal_0": {
+    "0.const_signal_0_23": {
       "value": "0",
       "wire_index": 12
     },
-    "Switcher.const_signal_0": {
+    "0.const_signal_2_100": {
+      "value": "2",
+      "wire_index": 40
+    },
+    "0.const_signal_3_126": {
+      "value": "3",
+      "wire_index": 54
+    },
+    "Switcher.const_signal_0_149": {
+      "value": "0",
+      "wire_index": 71
+    },
+    "Switcher.const_signal_0_97": {
+      "value": "0",
+      "wire_index": 44
+    },
+    "Switcher.const_signal_0_34": {
+      "value": "0",
+      "wire_index": 9
+    },
+    "Switcher.const_signal_0_46": {
+      "value": "0",
+      "wire_index": 16
+    },
+    "0.const_signal_4_152": {
+      "value": "4",
+      "wire_index": 68
+    },
+    "Switcher.const_signal_0_71": {
+      "value": "0",
+      "wire_index": 30
+    },
+    "Switcher.const_signal_0_85": {
+      "value": "0",
+      "wire_index": 37
+    },
+    "Switcher.const_signal_0_137": {
       "value": "0",
       "wire_index": 65
+    },
+    "Switcher.const_signal_0_123": {
+      "value": "0",
+      "wire_index": 58
+    },
+    "0.const_signal_1_74": {
+      "value": "1",
+      "wire_index": 26
+    },
+    "Switcher.const_signal_0_59": {
+      "value": "0",
+      "wire_index": 23
     }
   },
   "output_name_to_wire_index": {
