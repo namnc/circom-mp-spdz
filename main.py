@@ -389,6 +389,8 @@ def main():
     et = time.time()
     elapsed_time = et - st
     print('\n\n\nCIRCOM Execution time:', elapsed_time, 'seconds')
+    with open(f"./outputs/{circuit_name}/benchmark.json", 'w') as fp:
+        json.dump({"computation_time" : elapsed_time}, fp)
 
     rawpath = Path(str(mpspdz_circuit_path).replace("circuit", "raw_circuit"));
     print(f"\n\n\nBENCH RAW MP-SPDZ circuit at {rawpath}")
