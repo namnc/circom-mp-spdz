@@ -1,1 +1,0 @@
-[{"name": "alice", "inputs": ["0.in[0]", "0.in[1]", "0.in[2]", "0.in[3]", "0.in[4]"], "outputs": ["0.out"]}, {"name": "bob", "inputs": [], "outputs": ["0.out"]}]
