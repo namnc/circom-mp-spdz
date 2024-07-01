@@ -1,8 +1,8 @@
 pragma circom 2.0.0;
 
-include "./circomlib-matrix/matElemMul.circom";
-include "./circomlib-matrix/matElemSum.circom";
-include "./util.circom";
+include "../circomlib-matrix/matElemMul.circom";
+include "../circomlib-matrix/matElemSum.circom";
+include "../util.circom";
 
 // Conv2D layer with valid padding
 // n = 10 to the power of the number of decimal places
@@ -10,7 +10,7 @@ template Conv2D (nRows, nCols, nChannels, nFilters, kernelSize, strides, n) {
     signal input in[nRows][nCols][nChannels];
     signal input weights[kernelSize][kernelSize][nChannels][nFilters];
     signal input bias[nFilters];
-    signal input out[(nRows-kernelSize)\strides+1][(nCols-kernelSize)\strides+1][nFilters];
+    signal output out[(nRows-kernelSize)\strides+1][(nCols-kernelSize)\strides+1][nFilters];
     // signal input remainder[(nRows-kernelSize)\strides+1][(nCols-kernelSize)\strides+1][nFilters];
 
     component mul[(nRows-kernelSize)\strides+1][(nCols-kernelSize)\strides+1][nChannels][nFilters];
@@ -47,3 +47,5 @@ template Conv2D (nRows, nCols, nChannels, nFilters, kernelSize, strides, n) {
         }
     }
 }
+
+component main = Conv2D(5, 5, 3, 2, 3, 1, 10**36);

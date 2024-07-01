@@ -1,8 +1,8 @@
 pragma circom 2.0.0;
 
-include "./circomlib-matrix/matElemMul.circom";
-include "./circomlib-matrix/matElemSum.circom";
-include "./util.circom";
+include "../circomlib-matrix/matElemMul.circom";
+include "../circomlib-matrix/matElemSum.circom";
+include "../util.circom";
 
 // Conv1D layer with valid padding
 // n = 10 to the power of the number of decimal places
@@ -41,3 +41,5 @@ template Conv1D (nInputs, nChannels, nFilters, kernelSize, strides, n) {
         }
     }
 }
+
+component main = Conv1D(20, 3, 2, 4, 3, 10**36);
