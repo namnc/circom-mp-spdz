@@ -1,12 +1,12 @@
-pragma circom 2.1.1;
+pragma circom 2.1.0;
 // include "./Conv2D.circom";
 
-include "./circomlib/sign.circom";
-include "./circomlib/bitify.circom";
-include "./circomlib/comparators.circom";
-include "./circomlib-matrix/matElemMul.circom";
-include "./circomlib-matrix/matElemSum.circom";
-include "./util.circom";
+include "../circomlib/sign.circom";
+include "../circomlib/bitify.circom";
+include "../circomlib/comparators.circom";
+include "../circomlib-matrix/matElemMul.circom";
+include "../circomlib-matrix/matElemSum.circom";
+include "../util.circom";
 
 // Depthwise Convolution layer with valid padding
 // Note that nFilters must be a multiple of nChannels
@@ -62,3 +62,5 @@ template DepthwiseConv2D (nRows, nCols, nChannels, nFilters, kernelSize, strides
         }
     }
 }
+
+component main = DepthwiseConv2D(5, 5, 3, 2, 3, 1, 10**36);

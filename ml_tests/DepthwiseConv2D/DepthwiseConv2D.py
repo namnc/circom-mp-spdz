@@ -24,11 +24,10 @@ for i in range(nRows):
 
 for i in range(kernelSize):
     for j in range(kernelSize):
-        for k in range(nChannels):
-            for m in range(nFilters):
-                txt = weightstxt + f"[{i}][{j}][{k}][{m}]"
-                list[1]['inputs'].append(txt)
-                inlistdictlist2[txt] = i * j * k * m
+        for k in range(nFilters):
+            txt = weightstxt + f"[{i}][{j}][{k}]"
+            list[1]['inputs'].append(txt)
+            inlistdictlist2[txt] = i * j * k
 
 for i in range(nFilters):
     txt = biastxt + f"[{i}]"
