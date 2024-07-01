@@ -9,3 +9,4 @@
 | GlobalAveragePooling2D | 0.212402 |
 | naive_search | 9.220558 |
 | ReLU | 0.131581 |
+| MaxPooling2D | 0.917996 |

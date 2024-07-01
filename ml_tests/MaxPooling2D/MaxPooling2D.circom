@@ -1,11 +1,11 @@
 pragma circom 2.0.0;
 
-include "./util.circom";
+include "../util.circom";
 
 // MaxPooling2D layer
 template MaxPooling2D (nRows, nCols, nChannels, poolSize, strides) {
     signal input in[nRows][nCols][nChannels];
-    signal oputput out[(nRows-poolSize)\strides+1][(nCols-poolSize)\strides+1][nChannels];
+    signal output out[(nRows-poolSize)\strides+1][(nCols-poolSize)\strides+1][nChannels];
 
     component max[(nRows-poolSize)\strides+1][(nCols-poolSize)\strides+1][nChannels];
 
@@ -23,3 +23,5 @@ template MaxPooling2D (nRows, nCols, nChannels, poolSize, strides) {
         }
     }
 }
+
+component main = MaxPooling2D(3, 4, 5, 3, 3);
