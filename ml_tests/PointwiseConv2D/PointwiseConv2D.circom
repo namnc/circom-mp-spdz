@@ -1,12 +1,12 @@
-pragma circom 2.1.1;
+pragma circom 2.1.0;
 // include "./Conv2D.circom";
 
-include "./circomlib/sign.circom";
-include "./circomlib/bitify.circom";
-include "./circomlib/comparators.circom";
-include "./circomlib-matrix/matElemMul.circom";
-include "./circomlib-matrix/matElemSum.circom";
-include "./util.circom";
+include "../circomlib/sign.circom";
+include "../circomlib/bitify.circom";
+include "../circomlib/comparators.circom";
+include "../circomlib-matrix/matElemMul.circom";
+include "../circomlib-matrix/matElemSum.circom";
+include "../util.circom";
 
 // Pointwise Convolution layer
 // Note that nFilters must be a multiple of nChannels
@@ -35,5 +35,4 @@ template PointwiseConv2D (nRows, nCols, nChannels, nFilters, n) {
     }
 }
 
-
-// component main = PointwiseConv2D(32, 32, 8, 16);
+component main = PointwiseConv2D(3, 4, 5, 3, 5);
