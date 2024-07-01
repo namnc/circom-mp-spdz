@@ -1,11 +1,11 @@
 pragma circom 2.0.0;
 
-include "./GlobalSumPooling2D.circom";
+include "../GlobalSumPooling2D.circom";
 
 // GlobalAveragePooling2D layer, might lose precision compared to GlobalSumPooling2D
 template GlobalAveragePooling2D (nRows, nCols, nChannels) {
     signal input in[nRows][nCols][nChannels];
-    signal input out[nChannels];
+    signal output out[nChannels];
     // signal input remainder[nChannels];
 
     component globalSumPooling2D = GlobalSumPooling2D (nRows, nCols, nChannels);
@@ -23,3 +23,5 @@ template GlobalAveragePooling2D (nRows, nCols, nChannels) {
         out[k] <== globalSumPooling2D.out[k] / (nRows * nCols);
     }
 }
+
+component main = GlobalAveragePooling2D(3, 4, 5);
