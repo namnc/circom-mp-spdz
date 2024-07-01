@@ -1,5 +1,6 @@
 | Circuit | Time |
 | --- | --- |
+| GlobalMaxPooling2D | 1.214459 |
 | BatchNormalization2D | 0.322221 |
 | Conv1D | 1.903343 |
 | ArgMax | 0.224319 |

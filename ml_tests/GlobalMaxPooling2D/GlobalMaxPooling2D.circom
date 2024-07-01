@@ -1,6 +1,6 @@
 pragma circom 2.0.0;
 
-include "./util.circom";
+include "../util.circom";
 
 // GlobalMaxPooling2D layer
 template GlobalMaxPooling2D (nRows, nCols, nChannels) {
@@ -19,3 +19,5 @@ template GlobalMaxPooling2D (nRows, nCols, nChannels) {
         out[k] <== max[k].out;
     }
 }
+
+component main = GlobalMaxPooling2D(3, 4, 5);
