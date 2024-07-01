@@ -1,7 +1,7 @@
 pragma circom 2.0.0;
 
-include "matElemMul.circom";
-include "matElemSum.circom";
+include "./matElemMul.circom";
+include "./matElemSum.circom";
 
 // matrix multiplication
 template matMul (m,n,p) {

@@ -1,0 +1,13 @@
+| Circuit | Time |
+| --- | --- |
+| GlobalMaxPooling2D | 1.211710 |
+| BatchNormalization2D | 0.310184 |
+| Conv1D | 1.851334 |
+| ArgMax | 0.247506 |
+| Conv2D | 2.832670 |
+| ops_tests | 40.480325 |
+| SumPooling2D | 0.177101 |
+| GlobalAveragePooling2D | 0.179690 |
+| naive_search | 9.220558 |
+| ReLU | 0.131081 |
+| MaxPooling2D | 0.921470 |
