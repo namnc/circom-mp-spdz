@@ -16,3 +16,5 @@ template Flatten2D (nRows, nCols, nChannels) {
         }
     }
 }
+
+component main = Flatten2D(3, 4, 5);

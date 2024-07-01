@@ -1,6 +1,6 @@
 pragma circom 2.0.0;
 
-include "./circomlib-matrix/matMul.circom";
+include "../circomlib-matrix/matMul.circom";
 // Dense layer
 // n = 10 to the power of the number of decimal places
 template Dense (nInputs, nOutputs, n) {
@@ -24,3 +24,5 @@ template Dense (nInputs, nOutputs, n) {
         out[i] <== (dot[i].out[0][0] + bias[i]) >> n;
     }
 }
+
+component main = Dense(3, 4, 10**5);
