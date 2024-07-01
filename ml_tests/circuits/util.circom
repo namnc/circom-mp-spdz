@@ -1,9 +1,9 @@
 pragma circom 2.0.0;
 
-include "./circomlib/sign.circom";
-include "./circomlib/bitify.circom";
-include "./circomlib/comparators.circom";
-include "./circomlib/switcher.circom";
+include "../circomlib/sign.circom";
+include "../circomlib/bitify.circom";
+include "../circomlib/comparators.circom";
+include "../circomlib/switcher.circom";
 
 template IsNegative() {
     signal input in;

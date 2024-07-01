@@ -1,6 +1,6 @@
 pragma circom 2.0.0;
 
-include "./circomlib-matrix/matElemSum.circom";
+include "../circomlib-matrix/matElemSum.circom";
 include "./util.circom";
 
 // GlobalSumPooling2D layer, basically GlobalAveragePooling2D layer with a constant scaling, more optimized for circom
