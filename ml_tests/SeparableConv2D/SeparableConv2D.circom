@@ -1,7 +1,7 @@
-pragma circom 2.1.1;
+pragma circom 2.1.0;
 
-include "./PointwiseConv2D.circom";
-include "./DepthwiseConv2D.circom";
+include "../PointwiseConv2D/PointwiseConv2D.circom";
+include "../DepthwiseConv2D/DepthwiseConv2D.circom";
 
 // Separable convolution layer with valid padding.
 // Quantization is done by the caller by multiplying float values by 10**exp.
@@ -19,7 +19,7 @@ template SeparableConv2D (nRows, nCols, nChannels, nDepthFilters, nPointFilters,
     signal input pointBias[nPointFilters];
 
     // signal input pointRemainder[outRows][outCols][nPointFilters];
-    signal oputput pointOut[outRows][outCols][nPointFilters];
+    signal output pointOut[outRows][outCols][nPointFilters];
 
     component depthConv = DepthwiseConv2D(nRows, nCols, nChannels, nDepthFilters, depthKernelSize, strides, n);
     component pointConv = PointwiseConv2D(outRows, outCols, nDepthFilters, nPointFilters, n);
@@ -65,3 +65,5 @@ template SeparableConv2D (nRows, nCols, nChannels, nDepthFilters, nPointFilters,
         }
     }
 }
+
+component main = DepthwiseConv2D(5, 5, 3, 2, 2, 3, 1, 10**36);

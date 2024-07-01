@@ -63,4 +63,4 @@ template DepthwiseConv2D (nRows, nCols, nChannels, nFilters, kernelSize, strides
     }
 }
 
-component main = DepthwiseConv2D(5, 5, 3, 2, 3, 1, 10**36);
+// component main = DepthwiseConv2D(5, 5, 3, 2, 3, 1, 10**36);

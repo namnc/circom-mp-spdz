@@ -35,4 +35,4 @@ template PointwiseConv2D (nRows, nCols, nChannels, nFilters, n) {
     }
 }
 
-component main = PointwiseConv2D(3, 4, 5, 3, 5);
+// component main = PointwiseConv2D(3, 4, 5, 3, 5);
