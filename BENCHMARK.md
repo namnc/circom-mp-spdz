@@ -4,8 +4,9 @@
 | BatchNormalization2D | 0.310184 |
 | Conv1D | 1.851334 |
 | ArgMax | 0.247506 |
-| Conv2D | 2.832670 |
+| Conv2D | 2.884246 |
 | ops_tests | 40.480325 |
+| AveragePooling2D | 0.188400 |
 | SumPooling2D | 0.177101 |
 | GlobalAveragePooling2D | 0.179690 |
 | naive_search | 9.220558 |
