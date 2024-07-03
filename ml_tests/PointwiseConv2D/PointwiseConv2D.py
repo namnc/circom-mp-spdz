@@ -27,7 +27,7 @@ for i in range(nChannels):
         inlistdictlist2[txt] = i * j
 
 for i in range(nFilters):
-    txt = weightstxt + f"[{i}]"
+    txt = biastxt + f"[{i}]"
     list[1]['inputs'].append(txt)
     inlistdictlist2[txt] = i
 

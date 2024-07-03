@@ -10,7 +10,8 @@ template Flatten2D (nRows, nCols, nChannels) {
     for (var i=0; i<nRows; i++) {
         for (var j=0; j<nCols; j++) {
             for (var k=0; k<nChannels; k++) {
-                out[idx] <== in[i][j][k];
+                // TODO: remove a need to create a gate
+                out[idx] <== in[i][j][k] + 0;
                 idx++;
             }
         }

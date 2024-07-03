@@ -5,7 +5,6 @@ n = 10**5
 intxt = "0.in"
 weightstxt = "0.weights"
 biastxt = "0.bias"
-remaindertxt = "0.reminder"
 out = "0.out"
 inlistdictlist = {}
 inlistdictlist2 = {}
@@ -25,10 +24,6 @@ for i in range(nInputs):
 
 for i in range(nOutputs):
     txt = biastxt + f"[{i}]"
-    list[1]['inputs'].append(txt)
-    inlistdictlist2[txt] = i
-
-    txt = remaindertxt + f"[{i}]"
     list[1]['inputs'].append(txt)
     inlistdictlist2[txt] = i
 
