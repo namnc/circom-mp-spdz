@@ -1,11 +1,11 @@
-nRows = 5
-nCols = 5
+nRows = 7
+nCols = 7
 nChannels = 3
-nDepthFilters = 2
-nPointFilters = 2
+nDepthFilters = 3
+nPointFilters = 6
 depthKernelSize = 3
 strides = 1
-n = 10 ** 36
+n = 8
 
 intxt = "0.in"
 depthWeightstxt = "0.depthWeights"
@@ -41,7 +41,7 @@ for i in range(nDepthFilters):
 for i in range((nRows - depthKernelSize) // strides + 1):
     for j in range((nCols - depthKernelSize) // strides + 1):
         for k in range(nDepthFilters):
-            txt = depthWeightstxt + f"[{i}][{j}][{k}]"
+            txt = depthOuttxt + f"[{i}][{j}][{k}]"
             list[1]['inputs'].append(txt)
             inlistdictlist2[txt] = i * j * k
 
