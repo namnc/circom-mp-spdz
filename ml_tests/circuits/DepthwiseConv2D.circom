@@ -29,11 +29,11 @@ template DepthwiseConv2D (nRows, nCols, nChannels, nFilters, kernelSize, strides
     var valid_groups = nFilters % nChannels;
     var filtersPerChannel = nFilters / nChannels;
 
-    signal groups;
-    groups <== valid_groups;
-    component is_zero = IsZero();
-    is_zero.in <== groups;
-    is_zero.out === 1;
+    // signal groups;
+    // groups <== valid_groups;
+    // component is_zero = IsZero();
+    // is_zero.in <== groups;
+    // is_zero.out === 1;
 
     for (var row=0; row<outRows; row++) {
         for (var col=0; col<outCols; col++) {
