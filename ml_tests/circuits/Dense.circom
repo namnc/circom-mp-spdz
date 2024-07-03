@@ -7,8 +7,8 @@ template Dense (nInputs, nOutputs, n) {
     signal input in[nInputs];
     signal input weights[nInputs][nOutputs];
     signal input bias[nOutputs];
-    signal input out[nOutputs];
-    signal input remainder[nOutputs];
+    signal output out[nOutputs];
+    // signal input remainder[nOutputs];
 
     component dot[nOutputs];
 
