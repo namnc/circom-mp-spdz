@@ -324,24 +324,25 @@ def main():
     circuit_dir = EXAMPLES_DIR / circuit_name
     circom_path = circuit_dir / f"{circuit_name}.circom"
     mpc_settings_path = circuit_dir / "mpc_settings.json"
-    with open(mpc_settings_path, 'r') as f:
-        mpc_settings = json.load(f)
-    num_parties = len(mpc_settings)
-    input_json_path_for_each_party = [circuit_dir / f"inputs_party_{i}.json" for i in range(num_parties)]
 
     # ./outputs/{circuit_name}/...
     output_dir = PROJECT_ROOT / Path("outputs") / circuit_name
     output_dir.mkdir(parents=True, exist_ok=True)
     # Step 1: run circom-2-arithc
-    code = os.system(f"cd {CIRCOM_2_ARITHC_PROJECT_ROOT} && ./target/release/circom --input {circom_path} --output {output_dir}")
+    code = os.system(f"cd {CIRCOM_2_ARITHC_PROJECT_ROOT} && ./target/release/circom-2-arithc --input {circom_path} --output {output_dir}")
     if code != 0:
         raise ValueError(f"Failed to compile circom. Error code: {code}")
     
     # Step 1b: run circuit script
     # python {circuit}.py
-    code = os.system(f"cd {circuit_dir} && python {circuit_name}.py")
+    code = os.system(f"cd {circuit_dir} && python3 {circuit_name}.py")
     if code != 0:
         raise ValueError(f"Failed to run {circuit_name}.py. Error code: {code}")
+    
+    with open(mpc_settings_path, 'r') as f:
+        mpc_settings = json.load(f)
+    num_parties = len(mpc_settings)
+    input_json_path_for_each_party = [circuit_dir / f"inputs_party_{i}.json" for i in range(num_parties)]
     
     # code = os.system(f"cd {circuit_dir} && cp ./raw_circuit.mpc {MPSPDZ_CIRCUIT_DIR}")
     # if code != 0:
@@ -389,6 +390,8 @@ def main():
     et = time.time()
     elapsed_time = et - st
     print('\n\n\nCIRCOM Execution time:', elapsed_time, 'seconds')
+    with open(f"./outputs/{circuit_name}/benchmark.json", 'w') as fp:
+        json.dump({"computation_time" : elapsed_time}, fp)
 
     # rawpath = Path(str(mpspdz_circuit_path).replace("circuit", "raw_circuit"));
     # print(f"\n\n\nBENCH RAW MP-SPDZ circuit at {rawpath}")

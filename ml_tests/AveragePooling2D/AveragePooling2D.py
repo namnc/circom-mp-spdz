@@ -1,7 +1,7 @@
-nRows = 7
-nCols = 11
-nChannels = 5
-poolSize = 3
+nRows = 2
+nCols = 2
+nChannels = 2
+poolSize = 2
 strides = 2
 
 list = [ { "name": "alice", "inputs": [], "outputs": [] }, { "name": "bob", "inputs": [], "outputs": [] } ]
@@ -34,6 +34,3 @@ with open('inputs_party_0.json', 'w') as fp:
 
 with open('inputs_party_1.json', 'w') as fp:
     json.dump(inlistdictlist2, fp)
-
-#in[nRows][nCols][nChannels];
-#out[(nRows-poolSize)\strides+1][(nCols-poolSize)\strides+1][nChannels];
