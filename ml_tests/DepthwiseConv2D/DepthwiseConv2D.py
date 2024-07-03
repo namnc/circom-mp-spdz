@@ -1,10 +1,10 @@
-nRows = 5
-nCols = 5
-nChannels = 3
-nFilters = 2
+nRows = 3
+nCols = 3
+nChannels = 8
+nFilters = 8
 kernelSize = 3
 strides = 1
-n = 10 ** 36
+n = 8
 
 intxt = "0.in"
 weightstxt = "0.weights"
