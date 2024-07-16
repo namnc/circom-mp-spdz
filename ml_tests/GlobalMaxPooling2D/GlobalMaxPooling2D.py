@@ -1,11 +1,18 @@
-nRows = 3
-nCols = 4
-nChannels = 5
+import json
+
+nRows = 5
+nCols = 5
+nChannels = 3
 
 intxt = "0.in"
 out = "0.out"
 inlistdictlist = {}
 inlistdictlist2 = {}
+
+inputs_file_path = "globalMaxPooling2D_input.json"
+
+with open(inputs_file_path, 'r') as file:
+    inputs_dict = json.load(file)
 
 list = [ { "name": "alice", "inputs": [], "outputs": [] }, { "name": "bob", "inputs": [], "outputs": [] } ]
 
@@ -14,7 +21,7 @@ for i in range(nRows):
         for k in range(nChannels):
             txt = intxt + f"[{i}][{j}][{k}]"
             list[0]['inputs'].append(txt)
-            inlistdictlist[txt] = i * j * k
+            inlistdictlist[txt] = inputs_dict["in"][i][j][k]
 
 for i in range(nChannels):
     outtxt = out + f"[{i}]"

@@ -1,10 +1,12 @@
-nRows = 3
-nCols = 3
-nChannels = 8
-nFilters = 8
+import json
+
+nRows = 7
+nCols = 7
+nChannels = 3
+nFilters = 3
 kernelSize = 3
 strides = 1
-n = 8
+n = 10**15
 
 intxt = "0.in"
 weightstxt = "0.weights"
@@ -13,6 +15,11 @@ out = "0.out"
 inlistdictlist = {}
 inlistdictlist2 = {}
 
+inputs_file_path = "depthwiseConv2D_input.json"
+
+with open(inputs_file_path, 'r') as file:
+    inputs_dict = json.load(file)
+
 list = [ { "name": "alice", "inputs": [], "outputs": [] }, { "name": "bob", "inputs": [], "outputs": [] } ]
 
 for i in range(nRows):
@@ -20,19 +27,19 @@ for i in range(nRows):
         for k in range(nChannels):
             txt = intxt + f"[{i}][{j}][{k}]"
             list[0]['inputs'].append(txt)
-            inlistdictlist[txt] = i * j * k
+            inlistdictlist[txt] = inputs_dict["in"][i][j][k]
 
 for i in range(kernelSize):
     for j in range(kernelSize):
         for k in range(nFilters):
             txt = weightstxt + f"[{i}][{j}][{k}]"
             list[1]['inputs'].append(txt)
-            inlistdictlist2[txt] = i * j * k
+            inlistdictlist2[txt] = inputs_dict["weights"][i][j][k]
 
 for i in range(nFilters):
     txt = biastxt + f"[{i}]"
     list[1]['inputs'].append(txt)
-    inlistdictlist2[txt] = i
+    inlistdictlist2[txt] = inputs_dict["bias"][i]
 
 for i in range((nRows - kernelSize) // strides + 1):
     for j in range((nCols - kernelSize) // strides + 1):

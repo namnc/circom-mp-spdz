@@ -1,7 +1,9 @@
-nRows = 7
-nCols = 11
-nChannels = 5
-poolSize = 3
+import json
+
+nRows = 5
+nCols = 5
+nChannels = 3
+poolSize = 2
 strides = 2
 
 list = [ { "name": "alice", "inputs": [], "outputs": [] }, { "name": "bob", "inputs": [], "outputs": [] } ]
@@ -11,12 +13,17 @@ outtxt = "0.out"
 inlistdictlist = {}
 inlistdictlist2 = {}
 
+inputs_file_path = "sumPooling2D_input.json"
+
+with open(inputs_file_path, 'r') as file:
+    inputs_dict = json.load(file)
+
 for i in range(nRows):
     for j in range(nCols):
         for k in range(nChannels):
             inops = f"{intxt}[{i}][{j}][{k}]"
-            list[0]['inputs'].append(inops);
-            inlistdictlist[inops] = i*j*k;
+            list[0]['inputs'].append(inops)
+            inlistdictlist[inops] = inputs_dict["in"][i][j][k]
 
 for i in range((nRows-poolSize)//strides+1):
     for j in range((nCols-poolSize)//strides+1):
@@ -25,7 +32,6 @@ for i in range((nRows-poolSize)//strides+1):
             list[0]['outputs'].append(outops)
             list[1]['outputs'].append(outops)
 
-import json
 with open('mpc_settings.json', 'w') as fp:
     json.dump(list, fp)
 

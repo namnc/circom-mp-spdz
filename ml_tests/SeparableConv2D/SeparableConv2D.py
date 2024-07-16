@@ -1,3 +1,5 @@
+import json
+
 nRows = 7
 nCols = 7
 nChannels = 3
@@ -5,7 +7,7 @@ nDepthFilters = 3
 nPointFilters = 6
 depthKernelSize = 3
 strides = 1
-n = 8
+n = 10**15
 
 intxt = "0.in"
 depthWeightstxt = "0.depthWeights"
@@ -17,6 +19,11 @@ pointOut = "0.pointOut"
 inlistdictlist = {}
 inlistdictlist2 = {}
 
+inputs_file_path = "separableConv2D_input.json"
+
+with open(inputs_file_path, 'r') as file:
+    inputs_dict = json.load(file)
+
 list = [ { "name": "alice", "inputs": [], "outputs": [] }, { "name": "bob", "inputs": [], "outputs": [] } ]
 
 for i in range(nRows):
@@ -24,37 +31,37 @@ for i in range(nRows):
         for k in range(nChannels):
             txt = intxt + f"[{i}][{j}][{k}]"
             list[0]['inputs'].append(txt)
-            inlistdictlist[txt] = i * j * k
+            inlistdictlist[txt] = inputs_dict["in"][i][j][k]
 
 for i in range(depthKernelSize):
     for j in range(depthKernelSize):
         for k in range(nDepthFilters):
             txt = depthWeightstxt + f"[{i}][{j}][{k}]"
             list[1]['inputs'].append(txt)
-            inlistdictlist2[txt] = i * j * k
+            inlistdictlist2[txt] = inputs_dict["depthWeights"][i][j][k]
 
 for i in range(nDepthFilters):
     txt = depthBiastxt + f"[{i}]"
     list[1]['inputs'].append(txt)
-    inlistdictlist2[txt] = i
+    inlistdictlist2[txt] = inputs_dict["depthBias"][i]
 
 for i in range((nRows - depthKernelSize) // strides + 1):
     for j in range((nCols - depthKernelSize) // strides + 1):
         for k in range(nDepthFilters):
             txt = depthOuttxt + f"[{i}][{j}][{k}]"
             list[1]['inputs'].append(txt)
-            inlistdictlist2[txt] = i * j * k
+            inlistdictlist2[txt] = inputs_dict["depthOut"][i][j][k]
 
 for i in range(nChannels):
     for j in range(nPointFilters):
         txt = pointWeightstxt + f"[{i}][{j}]"
         list[0]['inputs'].append(txt)
-        inlistdictlist[txt] = i * j
+        inlistdictlist[txt] = inputs_dict["pointWeights"][i][j]
 
 for i in range(nPointFilters):
     txt = pointBiastxt + f"[{i}]"
     list[0]['inputs'].append(txt)
-    inlistdictlist[txt] = i
+    inlistdictlist[txt] = inputs_dict["pointBias"][i]
 
 for i in range((nRows - depthKernelSize) // strides + 1):
     for j in range((nCols - depthKernelSize) // strides + 1):
@@ -63,7 +70,6 @@ for i in range((nRows - depthKernelSize) // strides + 1):
             list[0]['outputs'].append(outtxt)
             list[1]['outputs'].append(outtxt)
 
-import json
 with open('mpc_settings.json', 'w') as fp:
     json.dump(list, fp)
 
