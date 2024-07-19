@@ -3,7 +3,6 @@ import json
 nRows = 5
 nCols = 5
 nChannels = 3
-n = 2**10
 
 list = [ { "name": "alice", "inputs": [], "outputs": [] }, { "name": "bob", "inputs": [], "outputs": [] } ]
 
