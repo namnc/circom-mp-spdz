@@ -2,7 +2,6 @@ import json
 
 nInputs = 20
 nOutputs = 10
-n = 10**36
 
 intxt = "0.in"
 weightstxt = "0.weights"
