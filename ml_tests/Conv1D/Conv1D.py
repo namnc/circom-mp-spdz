@@ -5,7 +5,6 @@ nChannels = 3
 nFilters = 2
 kernelSize = 4
 strides = 3
-n = 10**36
 
 intxt = "0.in"
 weightstxt = "0.weights"
