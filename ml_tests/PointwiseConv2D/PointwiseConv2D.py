@@ -4,7 +4,6 @@ nRows =5
 nCols = 5
 nChannels = 3
 nFilters = 6
-n = 10**15
 
 intxt = "0.in"
 weightstxt = "0.weights"
