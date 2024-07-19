@@ -7,7 +7,6 @@ nDepthFilters = 3
 nPointFilters = 6
 depthKernelSize = 3
 strides = 1
-n = 10**15
 
 intxt = "0.in"
 depthWeightstxt = "0.depthWeights"
