@@ -8,6 +8,7 @@
 | Conv2D | 2.804589 |
 | Dense | 1.570516 |
 | AveragePooling2D | 0.252535 |
+| SumPooling2D | 0.138793 |
 | GlobalAveragePooling2D | 0.223104 |
 | SeparableConv2D | 32.757993 |
 | ReLU | 0.130771 |
