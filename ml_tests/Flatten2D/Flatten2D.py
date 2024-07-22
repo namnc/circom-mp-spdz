@@ -1,4 +1,5 @@
 import json
+import random
 
 nRows = 5
 nCols = 5
@@ -10,6 +11,17 @@ inlistdictlist = {}
 inlistdictlist2 = {}
 
 inputs_file_path = "flatten2D_input.json"
+
+array_3d = [[[random.randint(0, 100) for _ in range(nChannels)] for _ in range(nCols)] for _ in range(nRows)]
+flattened = [elem for row in array_3d for col in row for elem in col]
+
+output = {
+    "in": array_3d,
+    "out": flattened
+}
+
+with open(inputs_file_path, 'w') as f:
+    json.dump(output, f, indent=2)
 
 with open(inputs_file_path, 'r') as file:
     inputs_dict = json.load(file)

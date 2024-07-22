@@ -75,7 +75,7 @@ template Max(n) {
 
     maxs[0] <== in[0];
     for(var i = 0; i < n; i++) {
-        gts[i] <==  maxs[i] >  in[i]; 
+        gts[i] <==  maxs[i] < in[i]; 
 
         switchers[i+1] = Switcher();
 
