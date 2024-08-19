@@ -165,13 +165,13 @@ template Model() {
         dense.bias[i0] <== dense_bias[i0];
     }
     for (var i0 = 0; i0 < 10; i0++) {
-        dense.out[i0] <== dense_out[i0];
+        dense.out[i0] <== dense_out[i0] + 0;
     }
     for (var i0 = 0; i0 < 10; i0++) {
-        dense_softmax.in[i0] <== dense.out[i0];
+        dense_softmax.in[i0] <== dense.out[i0] + 0;
     }
-    dense_softmax.out <== dense_softmax_out[0];
-    out[0] <== dense_softmax.out;
+    dense_softmax.out <== dense_softmax_out[0] + 0;
+    out[0] <== dense_softmax.out + 0;
 
 }
 
