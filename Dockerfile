@@ -18,7 +18,8 @@ RUN git clone https://github.com/namnc/circom-mp-spdz.git && \
     git clone https://github.com/mhchia/MP-SPDZ.git
 
 RUN cd circom-2-arithc && cargo build --release
-RUN cd MP-SPDZ && git checkout 704049e && make -j8 semi-party.x
+RUN cd MP-SPDZ && git checkout 704049e && make -j8 semi-party.x && mkdir Player-Data
+RUN cd circom-mp-spdz && git checkout ml_tests
 
 EXPOSE 5000
 
