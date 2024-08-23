@@ -1,10 +1,12 @@
-FROM python:3.10-bullseye
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && apt-get install -y \
-    automake build-essential clang-11 clang cmake git \
+    automake build-essential clang cmake git \
     libboost-dev libclang-dev libboost-iostreams-dev libboost-thread-dev \
-    libgmp-dev libntl-dev libsodium-dev libssl-dev libtool \
-    python3 curl
+    libboost-filesystem-dev libgmp-dev libntl-dev libsodium-dev libssl-dev libtool \
+    python3 python3-pip curl
 
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
