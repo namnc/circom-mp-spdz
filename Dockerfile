@@ -6,7 +6,8 @@ RUN apt-get update && apt-get install -y \
     automake build-essential clang cmake git \
     libboost-dev libclang-dev libboost-iostreams-dev libboost-thread-dev \
     libboost-filesystem-dev libgmp-dev libntl-dev libsodium-dev libssl-dev libtool \
-    python3 python3-pip curl
+    python3 python3-pip curl \
+    iproute2 iperf3 net-tools iputils-ping
 
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
@@ -22,5 +23,6 @@ RUN cd MP-SPDZ && git checkout 704049e && make -j8 semi-party.x && mkdir Player-
 RUN cd circom-mp-spdz && git checkout ml_tests
 
 EXPOSE 5000
+EXPOSE 5201
 
 CMD ["/bin/bash"]
