@@ -7,7 +7,8 @@ RUN apt-get update && apt-get install -y \
     libboost-dev libclang-dev libboost-iostreams-dev libboost-thread-dev \
     libboost-filesystem-dev libgmp-dev libntl-dev libsodium-dev libssl-dev libtool \
     python3 python3-pip curl \
-    iproute2 iperf3 net-tools iputils-ping
+    iproute2 iperf3 net-tools iputils-ping \
+    nano netcat telnet
 
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
@@ -22,7 +23,7 @@ RUN cd circom-2-arithc && cargo build --release
 RUN cd MP-SPDZ && git checkout 704049e && make -j8 semi-party.x && mkdir Player-Data
 RUN cd circom-mp-spdz && git checkout ml_tests
 
-EXPOSE 5000
+EXPOSE 3000
 EXPOSE 5201
 
 CMD ["/bin/bash"]
