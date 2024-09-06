@@ -50,7 +50,7 @@ def main():
 
     os.chdir("../MP-SPDZ")
     create_hosts_file()
-    run_remote_command(ssh, f'cd ../testing/MP-SPDZ && echo "{local_ip}:3001\n0.0.0.0:{party1_port}" >> hosts')
+    run_remote_command(ssh, f'cd ../testing/MP-SPDZ && echo "{local_ip}:3001\n0.0.0.0:{party1_port}" > hosts')
 
     for circuit_name in circuits_to_compile:
         os.chdir("../circom-mp-spdz")
