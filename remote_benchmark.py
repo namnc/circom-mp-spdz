@@ -71,7 +71,25 @@ def main():
         subprocess.run(["sshpass", "-p", "password", "scp", f"Player-Data/Input-P0-0", f"root@{party1_ip}:/testing/MP-SPDZ/Player-Data"])
         subprocess.run(["sshpass", "-p", "password", "scp", f"Player-Data/Input-P1-0", f"root@{party1_ip}:/testing/MP-SPDZ/Player-Data"])
 
-        print(f"6. Running MP-SPDZ with circuit {circuit_name}...")
+        print("6. Set Latency for Europe/One region")
+        run_remote_command(ssh, f"tc qdisc del dev eth0 root")
+        run_remote_command(ssh, f"tc qdisc add dev eth0 root handle 1:0 netem delay 2ms")
+        run_remote_command(ssh, f"tc qdisc add dev eth0 parent 1:1 handle 10:0 tbf rate 5gbit burst 100kb limit 10000kb")
+
+        print(f"7. Running MP-SPDZ with circuit {circuit_name}...")
+        spdz_local = subprocess.Popen(["./semi-party.x", "-N", "2", "-p", "0", "-OF", ".", "circuit", "-ip", "hosts"])
+        time.sleep(1) # to be sure that the process was started
+        run_remote_command(ssh, f"cd ../testing/MP-SPDZ && ./semi-party.x -N 2 -p 1 -OF . circuit -ip hosts")
+        spdz_local.wait()
+        print()
+        print()
+
+        print("7. Set Latency for US-Europe/two regions")
+        run_remote_command(ssh, f"tc qdisc del dev eth0 root")
+        run_remote_command(ssh, f"tc qdisc add dev eth0 root handle 1:0 netem delay 80ms")
+        run_remote_command(ssh, f"tc qdisc add dev eth0 parent 1:1 handle 10:0 tbf rate 1gbit burst 100kb limit 10000kb")
+
+        print(f"8. Running MP-SPDZ with circuit {circuit_name}...")
         spdz_local = subprocess.Popen(["./semi-party.x", "-N", "2", "-p", "0", "-OF", ".", "circuit", "-ip", "hosts"])
         time.sleep(1) # to be sure that the process was started
         run_remote_command(ssh, f"cd ../testing/MP-SPDZ && ./semi-party.x -N 2 -p 1 -OF . circuit -ip hosts")
