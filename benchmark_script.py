@@ -17,7 +17,7 @@ def create_table_row(directory, computation_time):
 
 def run_test(test_name):
     print(f"Running test: {test_name}")
-    subprocess.run(['python3', 'main_ml_tests.py', test_name], check=True)
+    subprocess.run(['python3', 'main_ml_tests.py', test_name], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 def run_all_tests():
     for item in os.listdir(ml_tests_dir):

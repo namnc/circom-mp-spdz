@@ -6,6 +6,35 @@ import time
 
 EXCLUDED_CIRCUITS = ["circomlib", "circomlib-matrix", "circuits", "crypto", "Keras2Circom", ".DS_Store"]
 SSH_PORT = 22
+BENCHMARK_FILE = "BENCHMARK.md"
+
+def read_benchmark_table():
+    benchmarks = {}
+    with open(BENCHMARK_FILE, "r") as f:
+        lines = f.readlines()
+        for line in lines[2:]:  # Skip header
+            parts = line.strip().split("|")
+            if len(parts) >= 3:
+                circuit = parts[1].strip()
+                benchmarks[circuit] = {
+                    "Time": parts[2].strip(),
+                    "One region": "",
+                    "Different regions": ""
+                }
+    return benchmarks
+
+def write_benchmark_table(benchmarks):
+    with open(BENCHMARK_FILE, "w") as f:
+        f.write("| Circuit | Time (without latency, on one machine) | One region | Different regions |\n")
+        f.write("| --- | --- | --- | --- |\n")
+        for circuit, times in benchmarks.items():
+            f.write(f"| {circuit} | {times['Time']} | {times['One region']} | {times['Different regions']} |\n")
+
+def extract_time_from_output(output):
+    for line in output.splitlines():
+        if line.startswith("Time ="):
+            return float(line.split("=")[1].split()[0])
+    return None
 
 def connect_ssh(hostname, port, username="root", password="password"):
     ssh = paramiko.SSHClient()
@@ -52,6 +81,9 @@ def main():
     create_hosts_file()
     run_remote_command(ssh, f'cd ../testing/MP-SPDZ && echo "{local_ip}:3001\n0.0.0.0:{party1_port}" > hosts')
 
+    os.chdir("../circom-mp-spdz")
+    benchmarks = read_benchmark_table()
+
     for circuit_name in circuits_to_compile:
         os.chdir("../circom-mp-spdz")
         print(f"1. Compiling circuit {circuit_name} to .mpc locally...")
@@ -72,32 +104,45 @@ def main():
         subprocess.run(["sshpass", "-p", "password", "scp", f"Player-Data/Input-P1-0", f"root@{party1_ip}:/testing/MP-SPDZ/Player-Data"])
 
         print("6. Set Latency for Europe/One region")
-        run_remote_command(ssh, f"tc qdisc del dev eth0 root")
-        run_remote_command(ssh, f"tc qdisc add dev eth0 root handle 1:0 netem delay 2ms")
-        run_remote_command(ssh, f"tc qdisc add dev eth0 parent 1:1 handle 10:0 tbf rate 5gbit burst 200kb limit 20000kb")
+        # run_remote_command(ssh, f"tc qdisc del dev eth0 root")
+        # run_remote_command(ssh, f"tc qdisc add dev eth0 root handle 1:0 netem delay 2ms")
+        # run_remote_command(ssh, f"tc qdisc add dev eth0 parent 1:1 handle 10:0 tbf rate 5gbit burst 200kb limit 20000kb")
 
         print(f"7. Running MP-SPDZ with circuit {circuit_name}...")
-        spdz_local = subprocess.Popen(["./semi-party.x", "-N", "2", "-p", "0", "-OF", ".", "circuit", "-ip", "hosts"])
+        spdz_local = subprocess.Popen(["./semi-party.x", "-N", "2", "-p", "0", "-OF", ".", "circuit", "-ip", "hosts"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         time.sleep(1) # to be sure that the process was started
         run_remote_command(ssh, f"cd ../testing/MP-SPDZ && ./semi-party.x -N 2 -p 1 -OF . circuit -ip hosts")
         spdz_local.wait()
-        print()
-        print()
 
-        print("7. Set Latency for US-Europe/two regions")
-        run_remote_command(ssh, f"tc qdisc del dev eth0 root")
-        run_remote_command(ssh, f"tc qdisc add dev eth0 root handle 1:0 netem delay 75ms")
-        run_remote_command(ssh, f"tc qdisc add dev eth0 parent 1:1 handle 10:0 tbf rate 2.5gbit burst 150kb limit 15000kb")
+        spdz_local.stdout.read()
+        time_one_region = extract_time_from_output(spdz_local.stderr.read())
+        if time_one_region is not None:
+            benchmarks[circuit_name]["One region"] = f"{time_one_region:.6f}"
 
-        print(f"8. Running MP-SPDZ with circuit {circuit_name}...")
-        spdz_local = subprocess.Popen(["./semi-party.x", "-N", "2", "-p", "0", "-OF", ".", "circuit", "-ip", "hosts"])
+        print()
+        
+        print("8. Set Latency for US-Europe/two regions")
+        # run_remote_command(ssh, f"tc qdisc del dev eth0 root")
+        # run_remote_command(ssh, f"tc qdisc add dev eth0 root handle 1:0 netem delay 75ms")
+        # run_remote_command(ssh, f"tc qdisc add dev eth0 parent 1:1 handle 10:0 tbf rate 2.5gbit burst 150kb limit 15000kb")
+
+        print(f"9. Running MP-SPDZ with circuit {circuit_name}...")
+        spdz_local = subprocess.Popen(["./semi-party.x", "-N", "2", "-p", "0", "-OF", ".", "circuit", "-ip", "hosts"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         time.sleep(1) # to be sure that the process was started
         run_remote_command(ssh, f"cd ../testing/MP-SPDZ && ./semi-party.x -N 2 -p 1 -OF . circuit -ip hosts")
         spdz_local.wait()
+
+        spdz_local.stdout.read()
+        time_different_regions = extract_time_from_output(spdz_local.stderr.read())
+        if time_different_regions is not None:
+            benchmarks[circuit_name]["Different regions"] = f"{time_different_regions:.6f}"
+
         print()
         print("------------------------------")
         print()
 
+    os.chdir("../circom-mp-spdz")
+    write_benchmark_table(benchmarks)
     ssh.close()
 
 if __name__ == "__main__":
