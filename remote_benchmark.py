@@ -64,10 +64,14 @@ def main():
         run_remote_command(ssh, f"cd ../testing/circom-mp-spdz && python3 main_ml_tests.py {circuit_name}")
 
         print(f"4. Copying {circuit_name}.mpc from local to party1...")
-        subprocess.run(["sshpass", "-p", "password", "scp", f"../circom-mp-spdz/outputs/{circuit_name}/circuit.mpc", f"root@{party1_ip}:/testing/MP-SPDZ/Programs/Source/"])
+        subprocess.run(["sshpass", "-p", "password", "scp", f"Programs/Source/circuit.mpc", f"root@{party1_ip}:/testing/MP-SPDZ/Programs/Source/"])
         run_remote_command(ssh, f"cd ../testing/MP-SPDZ && ./compile.py circuit")
 
-        print(f"5. Running MP-SPDZ with circuit {circuit_name}...")
+        print(f"5. Copying Inputs from local to party1...")
+        subprocess.run(["sshpass", "-p", "password", "scp", f"Player-Data/Input-P0-0", f"root@{party1_ip}:/testing/MP-SPDZ/Player-Data"])
+        subprocess.run(["sshpass", "-p", "password", "scp", f"Player-Data/Input-P1-0", f"root@{party1_ip}:/testing/MP-SPDZ/Player-Data"])
+
+        print(f"6. Running MP-SPDZ with circuit {circuit_name}...")
         spdz_local = subprocess.Popen(["./semi-party.x", "-N", "2", "-p", "0", "-OF", ".", "circuit", "-ip", "hosts"])
         time.sleep(1) # to be sure that the process was started
         run_remote_command(ssh, f"cd ../testing/MP-SPDZ && ./semi-party.x -N 2 -p 1 -OF . circuit -ip hosts")
