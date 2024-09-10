@@ -220,7 +220,9 @@ def generate_mpspdz_circuit(
     # ]
     print_outputs_str = '\n'.join(print_outputs_str_list)
 
-    circuit_code = f"""program.use_edabit(True)
+    circuit_code = f"""
+program.use_trunc_pr = True
+program.use_edabit(True)
 wires = {inputs_str}
 {gates_str}
 # Print outputs

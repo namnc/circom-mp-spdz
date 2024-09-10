@@ -3,6 +3,7 @@ import os
 import paramiko
 import subprocess
 import time
+import re
 
 EXCLUDED_CIRCUITS = ["circomlib", "circomlib-matrix", "circuits", "crypto", "Keras2Circom", ".DS_Store"]
 SSH_PORT = 22
@@ -25,16 +26,45 @@ def read_benchmark_table():
 
 def write_benchmark_table(benchmarks):
     with open(BENCHMARK_FILE, "w") as f:
-        f.write("| Circuit | Time (without latency, on one machine) | One region | Different regions |\n")
+        f.write("| Circuit | Time (without latency, on one machine) | One region (rate 5gb, latency 2ms) | Different regions (rate 2.5gb, latency 60ms) |\n")
         f.write("| --- | --- | --- | --- |\n")
         for circuit, times in benchmarks.items():
             f.write(f"| {circuit} | {times['Time']} | {times['One region']} | {times['Different regions']} |\n")
+        f.write(f"\n")
+
+def write_data_info_to_benchmark_file(benchmarks):
+    with open(BENCHMARK_FILE, "a") as f:
+        f.write("\n| Circuit | Data sent (MB) | Rounds | Global data sent (MB) |\n")
+        f.write("| --- | --- | --- | --- |\n")
+        
+        for circuit_name, data in benchmarks.items():
+            f.write(f"| {circuit_name} | {data['Data sent']} | {data['Rounds']} | {data['Global data sent']} |\n")
 
 def extract_time_from_output(output):
     for line in output.splitlines():
         if line.startswith("Time ="):
             return float(line.split("=")[1].split()[0])
     return None
+
+def extract_data_info_from_output(output):
+    data_info = {
+        "Data sent": None,
+        "Rounds": None,
+        "Global data sent": None
+    }
+
+    data_sent_re = re.compile(r"Data sent = ([\d.]+) MB")
+    rounds_re = re.compile(r"in ~(\d+) rounds")
+    global_data_sent_re = re.compile(r"Global data sent = ([\d.]+) MB")
+
+    for line in output.splitlines():
+        if "Data sent" in line:
+            data_info["Data sent"] = data_sent_re.search(line).group(1)
+            data_info["Rounds"] = rounds_re.search(line).group(1)
+        if "Global data sent" in line:
+            data_info["Global data sent"] = global_data_sent_re.search(line).group(1)
+
+    return data_info
 
 def connect_ssh(hostname, port, username="root", password="password"):
     ssh = paramiko.SSHClient()
@@ -104,9 +134,9 @@ def main():
         subprocess.run(["sshpass", "-p", "password", "scp", f"Player-Data/Input-P1-0", f"root@{party1_ip}:/testing/MP-SPDZ/Player-Data"])
 
         print("6. Set Latency for Europe/One region")
-        # run_remote_command(ssh, f"tc qdisc del dev eth0 root")
-        # run_remote_command(ssh, f"tc qdisc add dev eth0 root handle 1:0 netem delay 2ms")
-        # run_remote_command(ssh, f"tc qdisc add dev eth0 parent 1:1 handle 10:0 tbf rate 5gbit burst 200kb limit 20000kb")
+        run_remote_command(ssh, f"tc qdisc del dev eth0 root")
+        run_remote_command(ssh, f"tc qdisc add dev eth0 root handle 1:0 netem delay 2ms")
+        run_remote_command(ssh, f"tc qdisc add dev eth0 parent 1:1 handle 10:0 tbf rate 5gbit burst 200kb limit 20000kb")
 
         print(f"7. Running MP-SPDZ with circuit {circuit_name}...")
         spdz_local = subprocess.Popen(["./semi-party.x", "-N", "2", "-p", "0", "-OF", ".", "circuit", "-ip", "hosts"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
@@ -115,16 +145,21 @@ def main():
         spdz_local.wait()
 
         spdz_local.stdout.read()
-        time_one_region = extract_time_from_output(spdz_local.stderr.read())
+        output = spdz_local.stderr.read()
+        time_one_region = extract_time_from_output(output)
         if time_one_region is not None:
             benchmarks[circuit_name]["One region"] = f"{time_one_region:.6f}"
+        data_info = extract_data_info_from_output(output)
+        benchmarks[circuit_name]["Data sent"] = data_info["Data sent"]
+        benchmarks[circuit_name]["Rounds"] = data_info["Rounds"]
+        benchmarks[circuit_name]["Global data sent"] = data_info["Global data sent"]
 
         print()
         
         print("8. Set Latency for US-Europe/two regions")
-        # run_remote_command(ssh, f"tc qdisc del dev eth0 root")
-        # run_remote_command(ssh, f"tc qdisc add dev eth0 root handle 1:0 netem delay 75ms")
-        # run_remote_command(ssh, f"tc qdisc add dev eth0 parent 1:1 handle 10:0 tbf rate 2.5gbit burst 150kb limit 15000kb")
+        run_remote_command(ssh, f"tc qdisc del dev eth0 root")
+        run_remote_command(ssh, f"tc qdisc add dev eth0 root handle 1:0 netem delay 60ms")
+        run_remote_command(ssh, f"tc qdisc add dev eth0 parent 1:1 handle 10:0 tbf rate 2.5gbit burst 150kb limit 15000kb")
 
         print(f"9. Running MP-SPDZ with circuit {circuit_name}...")
         spdz_local = subprocess.Popen(["./semi-party.x", "-N", "2", "-p", "0", "-OF", ".", "circuit", "-ip", "hosts"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
@@ -133,17 +168,19 @@ def main():
         spdz_local.wait()
 
         spdz_local.stdout.read()
-        time_different_regions = extract_time_from_output(spdz_local.stderr.read())
+        output = spdz_local.stderr.read()
+        time_different_regions = extract_time_from_output(output)
         if time_different_regions is not None:
             benchmarks[circuit_name]["Different regions"] = f"{time_different_regions:.6f}"
 
         print()
         print("------------------------------")
         print()
-
+    
+    ssh.close()
     os.chdir("../circom-mp-spdz")
     write_benchmark_table(benchmarks)
-    ssh.close()
+    write_data_info_to_benchmark_file(benchmarks)
 
 if __name__ == "__main__":
     main()
