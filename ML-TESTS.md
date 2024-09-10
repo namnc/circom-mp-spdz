@@ -23,4 +23,4 @@ As a result of the work we have benchmarks for different ML circuits. They can b
 
 ## How to run ml tests/benchmarks
 
-Explained [here](https://github.com/socathie/circomlib-ml)
+Explained [here](https://hackmd.io/Lv6OuKNgQLqA6YGTGWG4DQ?view#Docker-Settings-abd-running-MP-SPDZ-on-multiple-machines)
