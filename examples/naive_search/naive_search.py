@@ -13,7 +13,7 @@ outtxt = "0.out";
 
 N = 1000;
 
-list = [ { "name": "alice", "inputs": [], "outputs": [] }, { "name": "bob", "inputs": [in2txt], "outputs": [outtxt] } ]
+list = [ { "name": "alice", "inputs": [], "outputs": [outtxt] }, { "name": "bob", "inputs": [in2txt], "outputs": [outtxt] } ]
 in1dict = {};
 in2dict = {in2txt: 10};
 for i in range(N):
