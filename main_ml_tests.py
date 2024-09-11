@@ -61,7 +61,7 @@ CIRCOM_2_ARITHC_PROJECT_ROOT = PROJECT_ROOT / '..' / 'circom-2-arithc'
 MPSPDZ_PROJECT_ROOT = PROJECT_ROOT / '..' / 'MP-SPDZ'
 MPSPDZ_CIRCUIT_DIR = MPSPDZ_PROJECT_ROOT / 'Programs' / 'Source'
 ARITHC_TO_BRISTOL_SCRIPT = PROJECT_ROOT / "arithc_to_bristol.py"
-EXAMPLES_DIR = PROJECT_ROOT / 'examples'
+EXAMPLES_DIR = PROJECT_ROOT / 'ml_tests'
 
 MPC_PROTOCOL = 'semi'
 
@@ -220,7 +220,10 @@ def generate_mpspdz_circuit(
     # ]
     print_outputs_str = '\n'.join(print_outputs_str_list)
 
-    circuit_code = f"""wires = {inputs_str}
+    circuit_code = f"""
+program.use_trunc_pr = True
+program.use_edabit(True)
+wires = {inputs_str}
 {gates_str}
 # Print outputs
 {print_outputs_str}
@@ -322,12 +325,8 @@ def main():
     circuit_name = args.circuit_name
 
     circuit_dir = EXAMPLES_DIR / circuit_name
-    circom_path = circuit_dir / "circuit.circom"
+    circom_path = circuit_dir / f"{circuit_name}.circom"
     mpc_settings_path = circuit_dir / "mpc_settings.json"
-    with open(mpc_settings_path, 'r') as f:
-        mpc_settings = json.load(f)
-    num_parties = len(mpc_settings)
-    input_json_path_for_each_party = [circuit_dir / f"inputs_party_{i}.json" for i in range(num_parties)]
 
     # ./outputs/{circuit_name}/...
     output_dir = PROJECT_ROOT / Path("outputs") / circuit_name
@@ -343,9 +342,14 @@ def main():
     if code != 0:
         raise ValueError(f"Failed to run {circuit_name}.py. Error code: {code}")
     
-    code = os.system(f"cd {circuit_dir} && cp ./raw_circuit.mpc {MPSPDZ_CIRCUIT_DIR}")
-    if code != 0:
-        raise ValueError(f"Failed to copy raw_circuit.mpc. Error code: {code}")
+    with open(mpc_settings_path, 'r') as f:
+        mpc_settings = json.load(f)
+    num_parties = len(mpc_settings)
+    input_json_path_for_each_party = [circuit_dir / f"inputs_party_{i}.json" for i in range(num_parties)]
+    
+    # code = os.system(f"cd {circuit_dir} && cp ./raw_circuit.mpc {MPSPDZ_CIRCUIT_DIR}")
+    # if code != 0:
+    #     raise ValueError(f"Failed to move raw_circuit.mpc. Error code: {code}")
 
     
     # Step 2: run arithc-to-bristol
@@ -369,7 +373,7 @@ def main():
 
     code = os.system(f"cd {MPSPDZ_CIRCUIT_DIR} && cp ./circuit.mpc {output_dir}")
     if code != 0:
-        raise ValueError(f"Failed to generate circuit.mpc. Error code: {code}")
+        raise ValueError(f"Failed to compile circom. Error code: {code}")
     
     # Step 4: generate MP-SPDZ inputs for each party
     for i, input_json_for_party_path in enumerate(input_json_path_for_each_party):
@@ -392,16 +396,16 @@ def main():
     with open(f"./outputs/{circuit_name}/benchmark.json", 'w') as fp:
         json.dump({"computation_time" : elapsed_time}, fp)
 
-    rawpath = Path(str(mpspdz_circuit_path).replace("circuit", "raw_circuit"));
-    print(f"\n\n\nBENCH RAW MP-SPDZ circuit at {rawpath}")
+    # rawpath = Path(str(mpspdz_circuit_path).replace("circuit", "raw_circuit"));
+    # print(f"\n\n\nBENCH RAW MP-SPDZ circuit at {rawpath}")
 
-    st = time.time()
-    raw_outputs = run_mpspdz_circuit(rawpath, num_parties)
-    print(f"\n\n\n========= Raw Computation has finished =========\n\n")
-    print(f"Outputs: {raw_outputs}")
-    et = time.time()
-    elapsed_time = et - st
-    print('\n\n\nRAW Execution time:', elapsed_time, 'seconds')
+    # st = time.time()
+    # raw_outputs = run_mpspdz_circuit(rawpath, num_parties)
+    # print(f"\n\n\n========= Raw Computation has finished =========\n\n")
+    # print(f"Outputs: {raw_outputs}")
+    # et = time.time()
+    # elapsed_time = et - st
+    # print('\n\n\nRAW Execution time:', elapsed_time, 'seconds')
 
 
 if __name__ == '__main__':
