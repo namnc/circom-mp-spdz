@@ -17,8 +17,8 @@ def BatchNormalizationInt(nRows, nCols, nChannels, n, X_in, a_in, b_in):
     for i in range(nRows):
         for j in range(nCols):
             for k in range(nChannels):
-                out[i][j][k] = int(X_in[i][j][k])*int(a_in[k]) + int(b_in[k])
-                out[i][j][k] = str(out[i][j][k] // n)
+                out[i][j][k] = float(X_in[i][j][k])*float(a_in[k]) + float(b_in[k])
+                out[i][j][k] = str(out[i][j][k])
     return out
 
 def Conv1DInt(nInputs, nChannels, nFilters, kernelSize, strides, n, input, weights, bias):
