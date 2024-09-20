@@ -51,7 +51,7 @@ def DenseInt(nInputs, nOutputs, n, input, weights, bias):
         for i in range(nInputs):
             out[j] += float(input[i]) * float(weights[i][j])
         out[j] += float(bias[j])
-        out[j] = str(out[j] / n)
+        out[j] = str(out[j])
     return out
 
 def GlobalAveragePooling2DInt(nRows, nCols, nChannels, input):
