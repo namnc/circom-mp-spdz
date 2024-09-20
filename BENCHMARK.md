@@ -1,20 +1,20 @@
-| Circuit | Time (without latency, on one machine) | One region (rate 5gb, latency 2ms) | Different regions (rate 2.5gb, latency 60ms) |
+| Circuit | Fast LAN (rate 10gb, latency 0.25ms) | LAN (rate 1gb, latency 1ms) | WAN (rate 100mb, latency 50ms) |
 | --- | --- | --- | --- |
-| DepthwiseConv2D | 9.121985 | 5.907890 | 42.709400 |
-| GlobalMaxPooling2D | 0.215514 | 2.742590 | 33.824400 |
-| BatchNormalization2D | 8.982086 | 5.862440 | 42.442000 |
-| Conv1D | 1.567994 | 2.577810 | 24.699200 |
-| ArgMax | 0.149328 | 1.351420 | 16.475400 |
-| Conv2D | 2.317575 | 2.867000 | 26.225900 |
-| Dense | 1.445482 | 2.452500 | 24.366000 |
-| AveragePooling2D | 0.160485 | 0.888444 | 10.180900 |
-| SumPooling2D | 0.104244 | 0.012256 | 0.152150 |
-| GlobalAveragePooling2D | 0.186116 | 1.333930 | 15.093700 |
-| SeparableConv2D | 27.892814 | 14.543400 | 97.868000 |
-| ReLU | 0.245169 | 2.434900 | 26.685700 |
-| Flatten2D | 0.153417 | 0.013079 | 0.155441 |
-| MaxPooling2D | 0.183715 | 1.330040 | 16.130300 |
-| PointwiseConv2D | 17.278185 | 10.273400 | 71.872700 |
+| DepthwiseConv2D | 4.508590 | 5.333890 | 40.752400 |
+| GlobalMaxPooling2D | 1.580060 | 2.121270 | 34.043500 |
+| BatchNormalization2D | 4.517530 | 5.289740 | 39.124600 |
+| Conv1D | 1.499740 | 1.970370 | 27.505500 |
+| ArgMax | 0.727750 | 1.143670 | 18.592200 |
+| Conv2D | 1.929560 | 2.499890 | 29.358900 |
+| Dense | 1.552070 | 2.187230 | 27.990800 |
+| AveragePooling2D | 0.477079 | 0.724241 | 11.612400 |
+| SumPooling2D | 0.005776 | 0.007228 | 0.174216 |
+| GlobalAveragePooling2D | 0.812070 | 1.236330 | 17.276700 |
+| SeparableConv2D | 11.701600 | 12.948200 | 90.974200 |
+| ReLU | 1.696460 | 2.404690 | 30.424000 |
+| Flatten2D | 0.004507 | 0.007012 | 0.174841 |
+| MaxPooling2D | 0.707512 | 1.182670 | 18.457000 |
+| PointwiseConv2D | 8.216470 | 9.359570 | 68.186700 |
 
 
 | Circuit | Data sent (MB) | Rounds | Global data sent (MB) |
