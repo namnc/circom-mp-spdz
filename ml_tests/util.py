@@ -59,24 +59,24 @@ def GlobalAveragePooling2DInt(nRows, nCols, nChannels, input):
     for k in range(nChannels):
         for i in range(nRows):
             for j in range(nCols):
-                out[k] += int(input[i][j][k])
-        out[k] = str(out[k] // (nRows * nCols))
+                out[k] += float(input[i][j][k])
+        out[k] = float(out[k] / (nRows * nCols))
     return out
 
 def GlobalMaxPooling2DInt(nRows, nCols, nChannels, input):
-    out = [max(int(input[i][j][k]) for i in range(nRows) for j in range(nCols)) for k in range(nChannels)]
+    out = [max(float(input[i][j][k]) for i in range(nRows) for j in range(nCols)) for k in range(nChannels)]
     return out
 
 def MaxPooling2DInt(nRows, nCols, nChannels, poolSize, strides, input):
-    out = [[[str(max(int(input[i*strides + x][j*strides + y][k]) for x in range(poolSize) for y in range(poolSize))) for k in range(nChannels)] for j in range((nCols - poolSize) // strides + 1)] for i in range((nRows - poolSize) // strides + 1)]
+    out = [[[str(max(float(input[i*strides + x][j*strides + y][k]) for x in range(poolSize) for y in range(poolSize))) for k in range(nChannels)] for j in range((nCols - poolSize) // strides + 1)] for i in range((nRows - poolSize) // strides + 1)]
     return out
 
 def Flatten2DInt(nRows, nCols, nChannels, input):
-    out = [str(int(input[i][j][k])) for i in range(nRows) for j in range(nCols) for k in range(nChannels)]
+    out = [str(float(input[i][j][k])) for i in range(nRows) for j in range(nCols) for k in range(nChannels)]
     return out
 
 def ReLUInt(nRows, nCols, nChannels, input):
-    out = [[[str(max(int(input[i][j][k]), 0)) for k in range(nChannels)] for j in range(nCols)] for i in range(nRows)]
+    out = [[[str(max(float(input[i][j][k]), 0)) for k in range(nChannels)] for j in range(nCols)] for i in range(nRows)]
     return out
 
 def ArgMaxInt(input):
