@@ -8,8 +8,8 @@ def AveragePooling2DInt (nRows, nCols, nChannels, poolSize, strides, input):
             for k in range(nChannels):
                 for x in range(poolSize):
                     for y in range(poolSize):
-                        out[i][j][k] += int(input[i*strides+x][j*strides+y][k])
-                out[i][j][k] = str(out[i][j][k] // poolSize**2)
+                        out[i][j][k] += float(input[i*strides+x][j*strides+y][k])
+                out[i][j][k] = str(out[i][j][k] / poolSize**2)
     return out
 
 def BatchNormalizationInt(nRows, nCols, nChannels, n, X_in, a_in, b_in):
