@@ -27,9 +27,9 @@ def Conv1DInt(nInputs, nChannels, nFilters, kernelSize, strides, n, input, weigh
         for j in range(nFilters):
             for k in range(kernelSize):
                 for l in range(nChannels):
-                    out[i][j] += int(input[i*strides + k][l])*int(weights[k][l][j])
-            out[i][j] += int(bias[j])
-            out[i][j] = str(out[i][j] // n)
+                    out[i][j] += float(input[i*strides + k][l])*float(weights[k][l][j])
+            out[i][j] += float(bias[j])
+            out[i][j] = str(out[i][j])
     return out
 
 def Conv2DInt(nRows, nCols, nChannels, nFilters, kernelSize, strides, n, input, weights, bias):
@@ -40,9 +40,9 @@ def Conv2DInt(nRows, nCols, nChannels, nFilters, kernelSize, strides, n, input, 
                 for k in range(nChannels):
                     for x in range(kernelSize):
                         for y in range(kernelSize):
-                            out[i][j][m] += int(input[i*strides+x][j*strides+y][k])*int(weights[x][y][k][m])
-                out[i][j][m] += int(bias[m])
-                out[i][j][m] = str(out[i][j][m] // n)
+                            out[i][j][m] += float(input[i*strides+x][j*strides+y][k])*float(weights[x][y][k][m])
+                out[i][j][m] += float(bias[m])
+                out[i][j][m] = str(out[i][j][m])
     return out
 
 def DenseInt(nInputs, nOutputs, n, input, weights, bias):
