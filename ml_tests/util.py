@@ -81,3 +81,18 @@ def ReLUInt(nRows, nCols, nChannels, input):
 
 def ArgMaxInt(input):
     return [input.index(str(max(int(input[i]) for i in range(len(input)))))]
+
+def reshape_array(values_list, dimensions):
+    total_size = 1
+    for dim in dimensions:
+        total_size *= dim
+    assert len(values_list) == total_size, "Total size does not match the number of values"
+
+    def helper(vals, dims):
+        if len(dims) == 1:
+            return vals[:dims[0]]
+        else:
+            step = len(vals) // dims[0]
+            return [helper(vals[i*step:(i+1)*step], dims[1:]) for i in range(dims[0])]
+
+    return helper(values_list, dimensions)
