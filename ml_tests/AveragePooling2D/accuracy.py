@@ -42,7 +42,6 @@ def main():
 
     real_output = reshape_array(values_list, dimensions)
 
-    # Read input data for 'AveragePooling2DInt' function
     with open('ml_tests/AveragePooling2D/averagePooling2D_input.json', 'r') as f:
         data = json.load(f)
 
