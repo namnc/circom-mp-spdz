@@ -56,9 +56,16 @@ def main():
     correct_output_np = np.array(correct_output, dtype=float)
     real_output_np = np.array(real_output, dtype=float)
 
-    difference = np.abs(correct_output_np - real_output_np)
+    # Calculate multidimensional Euclidean distance
+    euclidean_distance = np.linalg.norm(correct_output_np - real_output_np)
 
-    print(f"Difference between outputs: \n{difference}")
+    # Calculate the maximum possible distance
+    max_distance = np.linalg.norm(correct_output_np)
+
+    # Calculate accuracy percentage
+    accuracy_percentage = max(0, (1 - euclidean_distance / max_distance)) * 100
+
+    print(f"Accuracy: {accuracy_percentage:.2f}%")
 
 if __name__ == "__main__":
     main()
