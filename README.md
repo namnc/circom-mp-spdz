@@ -54,7 +54,6 @@ git clone https://github.com/mhchia/MP-SPDZ/
 Go to the circom-2-arithc submodule directory:
 ```bash
 cd circom-2-arithc
-git checkout 800e2d4
 ```
 
 Initialize the .env file:
@@ -84,8 +83,7 @@ Build the MPC VM for `semi` protocol
 
 ```bash
 make -j8 semi-party.x
-# Make sure `semi-party.x` exists
-ls semi-party.x
+mkdir Player-Data
 ```
 
 ## How to run
@@ -109,7 +107,9 @@ You can run these examples by following the instructions in the root directory.
 
 ```bash
 # Go back to the root directory of circom-mp-spdz
-cd ..
+cd ../circom-mp-spdz/examples/{circuit_name}
+python {circuit_name}.py
+cd ../..
 python main.py {circuit_name}
 ```
 - `{circuit_name}` is the name of the circuit you want to run. Can either be `ops_tests` or `naive_search`.
