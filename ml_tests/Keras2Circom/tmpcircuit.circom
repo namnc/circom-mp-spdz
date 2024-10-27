@@ -1,8 +1,8 @@
 pragma circom 2.0.0;
 
-include "../circuits/Flatten2D.circom";
 include "../circuits/ArgMax.circom";
 include "../circuits/Dense.circom";
+include "../circuits/Flatten2D.circom";
 
 template Model() {
 signal input in[2][1][1];
@@ -20,6 +20,9 @@ for (var i0 = 0; i0 < 2; i0++) {
             flatten_11.in[i0][i1][i2] <== in[i0][i1][i2];
 }}}
 for (var i0 = 0; i0 < 2; i0++) {
+    flatten_11.out[i0] <== flatten_11_out[i0];
+}
+for (var i0 = 0; i0 < 2; i0++) {
     dense_23.in[i0] <== flatten_11.out[i0];
 }
 for (var i0 = 0; i0 < 2; i0++) {
@@ -30,7 +33,13 @@ for (var i0 = 0; i0 < 10; i0++) {
     dense_23.bias[i0] <== dense_23_bias[i0];
 }
 for (var i0 = 0; i0 < 10; i0++) {
+    dense_23.out[i0] <== dense_23_out[i0];
+}
+for (var i0 = 0; i0 < 10; i0++) {
     dense_23_softmax.in[i0] <== dense_23.out[i0];
+}
+for (var i0 = 0; i0 < 1; i0++) {
+    dense_23_softmax.out[i0] <== dense_23_softmax_out[i0];
 }
 out[0] <== dense_23_softmax.out;
 
